@@ -130,12 +130,7 @@ public class ShadowDeskBlock extends Block implements SimpleWaterloggedBlock, En
 		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem() instanceof AxeItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 0;
-		return false;
-	}
+
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {

@@ -37,12 +37,6 @@ public class EjectionPressurePlateBlock extends PressurePlateBlock {
 		return 0;
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 1;
-		return false;
-	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {

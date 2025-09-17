@@ -58,12 +58,6 @@ public class Claypan0Block extends Block {
 		return box(0, 0, 0, 16, 3, 16);
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 0;
-		return false;
-	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
