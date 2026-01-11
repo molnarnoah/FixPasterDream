@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import net.pasterdream.init.PasterdreamModItems;
@@ -32,13 +33,11 @@ import java.util.List;
 import java.util.Comparator;
 
 public class IceshadowHammerPr0Procedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
+	public static void execute(LevelAccessor world, double x, double y, double z, Player entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.1) {
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.1));
-			if (entity instanceof Player _player)
-				_player.getCooldowns().addCooldown(itemstack.getItem(), 80);
+		if (MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(entity,0.1)) {
+            entity.getCooldowns().addCooldown(itemstack.getItem(), 80);
 			if (world instanceof ServerLevel _level) {
 				Entity entityToSpawn = PasterdreamModEntities.SHAKING_CRYSTAL.get().spawn(_level, BlockPos.containing(x, y + 1, z), MobSpawnType.MOB_SUMMONED);
 				if (entityToSpawn != null) {
@@ -106,7 +105,10 @@ public class IceshadowHammerPr0Procedure {
 					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:stone_break")), SoundSource.NEUTRAL, (float) 0.7, (float) 0.8);
 				} 
 			}
-			if (entity instanceof LivingEntity lv ? CuriosApi.getCuriosHelper().findEquippedCurio(PasterdreamModItems.ICESHADOW_CURIO.get(), lv).isPresent() : false == false) {
+
+			if (CuriosApi.getCuriosInventory(entity).map(handler ->
+                            handler.findFirstCurio(PasterdreamModItems.ICESHADOW_CURIO.get()).isPresent())
+                    .orElse(false)) {
 				if (world instanceof ServerLevel _level) {
 					Entity entityToSpawn = PasterdreamModEntities.SHAKING_CRYSTAL.get().spawn(_level, BlockPos.containing(x + Math.abs(x) - Math.abs(entity.getX()), y + 1, z + Math.abs(z) - Math.abs(entity.getZ())), MobSpawnType.MOB_SUMMONED);
 					if (entityToSpawn != null) {
@@ -211,8 +213,8 @@ public class IceshadowHammerPr0Procedure {
 				});
 			}
 		} else {
-			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
+			if (entity.level().isClientSide())
+                entity.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
 		}
 	}
 }

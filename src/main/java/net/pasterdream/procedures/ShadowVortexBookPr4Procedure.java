@@ -1,5 +1,8 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModParticleTypes;
 import net.pasterdream.init.PasterdreamModBlocks;
 import net.pasterdream.init.PasterdreamModAttributes;
@@ -68,12 +71,19 @@ public class ShadowVortexBookPr4Procedure {
 					}
 				}
 			}
-			if (((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.MAGICPOWER.get()).getValue() <= 9) {
-				((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue(
-						(((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - (0.09 - ((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.MAGICPOWER.get()).getValue() * 0.01)));
-				((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.SAN.get())
-						.setBaseValue((((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - (0.18 - ((LivingEntity) sourceentity).getAttribute(PasterdreamModAttributes.MAGICPOWER.get()).getValue() * 0.02)));
-			}
+            if(sourceentity instanceof Player pl)
+            {
+                AttributeInstance instance = pl.getAttribute(PasterdreamModAttributes.MAGICPOWER.get());
+                if(instance != null)
+                {
+                    double magic_power = instance.getValue();
+                    if(magic_power < 9)
+                    {
+                        MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(pl,0.01 * (9 - magic_power));
+                        SanCapability.addPlayerSanWithCheck(pl, -0.02 * (9 - magic_power));
+                    }
+                }
+            }
 		}
 	}
 }

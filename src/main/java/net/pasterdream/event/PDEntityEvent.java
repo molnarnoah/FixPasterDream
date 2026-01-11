@@ -1,9 +1,11 @@
 package net.pasterdream.event;
 
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pasterdream.PasterdreamMod;
@@ -11,6 +13,7 @@ import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.potion.EvasionBuffMobEffect;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.pasterdream.init.PasterdreamModAttributes;
+import net.pasterdream.world.inventory.BlueprintGui0Menu;
 
 @Mod.EventBusSubscriber(modid = PasterdreamMod.MODID)
 public class PDEntityEvent {
@@ -42,9 +45,9 @@ public class PDEntityEvent {
     @SubscribeEvent
     public static void onEntityHeal(LivingHealEvent event) {
         if (event.getEntity() instanceof Player player) {
-        var entity = event.getEntity();
-        var value = entity.getAttributeValue(PasterdreamModAttributes.TOTALHEALING.get());
-        event.setAmount((float) (event.getAmount() * value));
+            var entity = event.getEntity();
+            var value = entity.getAttributeValue(PasterdreamModAttributes.TOTALHEALING.get());
+            event.setAmount((float) (event.getAmount() * value));
         }
     }
 }

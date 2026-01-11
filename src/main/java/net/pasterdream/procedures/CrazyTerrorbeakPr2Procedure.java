@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.entity.CrazyTerrorbeakEntity;
@@ -72,9 +73,9 @@ public class CrazyTerrorbeakPr2Procedure {
 							if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 								_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 1));
 						}
-						if (entityiterator instanceof Player) {
-							((LivingEntity) entityiterator).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entityiterator).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 3));
-						}
+						if (entityiterator instanceof Player pl) {
+                            SanCapability.addPlayerSanWithCheck(pl,-3);
+                        }
 					}
 				}
 				PasterdreamMod.queueServerWork(200, () -> {

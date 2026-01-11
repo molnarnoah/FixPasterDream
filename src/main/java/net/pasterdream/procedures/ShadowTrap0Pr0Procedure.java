@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.PasterdreamMod;
 
@@ -66,7 +67,10 @@ public class ShadowTrap0Pr0Procedure {
 				}
 			}
 			entity.hurt(new DamageSource(world.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)), 5);
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 5));
+            if(entity instanceof Player pl)
+            {
+                SanCapability.addPlayerSanWithCheck(pl,-5);
+            }
 			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 				_entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 80, 0));
 			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())

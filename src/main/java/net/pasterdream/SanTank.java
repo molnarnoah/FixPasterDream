@@ -6,10 +6,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.configuration.PasterdreamConfigClientConfiguration;
 
@@ -29,6 +31,7 @@ public class SanTank {
 
     public static void randomBarHandler(ForgeGui gui, int x, int y, GuiGraphics maxStack) {
         var player = MC.player;
+        if (!SanCapability.IsSanCheckSystem())return;
         if (PasterdreamConfigClientConfiguration.STEALTH_DISPLAY_ATTRIBUTE_HUD.get() && !player.isShiftKeyDown()) return;
         MC.getProfiler().push("san_bar");
         RenderSystem.enableBlend();
@@ -36,10 +39,22 @@ public class SanTank {
         RenderSystem.setShaderTexture(0, MeltdreamenergyTank.ICON);
         var xBase = x + PasterdreamConfigClientConfiguration.SAN_TANK_XBASE.get().intValue();
         var yBase = y + PasterdreamConfigClientConfiguration.SAN_TANK_YBASE.get().intValue();
-        int amount = (int) Math.round(player.getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue());
+        int amount = (int) Math.round(player.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).map(SanCapability::getSanValue).orElse(100.0));
         float smallAmout = (float) 20 / 100;
         maxStack.blit(ICON, xBase, yBase,0,32,32,32);
         maxStack.blit(ICON, xBase, yBase + 6, 0, 70, 32, 20 - Math.round(amount * smallAmout));
+        AttributeInstance instance = player.getAttribute(PasterdreamModAttributes.SAN_VARIABILITY.get());
+        if(instance != null)
+        {
+            boolean flag = Math.abs(instance.getValue()) < 5;
+            if(instance.getValue() > 0)
+            {
+                maxStack.blit(ICON, xBase + 18 + (flag ? 3 : 0), yBase + 16 + (flag ? 4 : 0),flag ? 7 : 14,flag ? 8 : 16,32,32,14,16,256, 256);
+            }
+            else if(instance.getValue() < 0){
+                maxStack.blit(ICON, xBase + 18 + (flag ? 3 : 0), yBase + 16 + (flag ? 4 : 0),flag ? 7 : 14,flag ? 8 : 16,32,48,14,16,256, 256);
+            }
+        }
         if (player.isShiftKeyDown()) maxStack.drawString(MC.font, amount + "/100", xBase + 4, yBase - 4, -1);
         RenderSystem.disableBlend();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

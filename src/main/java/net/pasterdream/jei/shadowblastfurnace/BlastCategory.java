@@ -7,14 +7,23 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.pasterdream.PasterdreamMod;
 import net.pasterdream.init.PasterdreamModItems;
+import net.pasterdream.init.PasterdreamModRecipeType;
+import net.pasterdream.recipes.dark_smithing.ShadowBlastFurnaceRecipe;
+import net.pasterdream.utils.RecipeUtils;
 
-public final class BlastCategory implements IRecipeCategory<BlastDataRecipe> {
-    public static final RecipeType<BlastDataRecipe> BLAST_DATA_RECIPE_RECIPE_TYPE = RecipeType.create(PasterdreamMod.MODID, "dark_blast_recipe", BlastDataRecipe.class);
+import java.util.Arrays;
+
+public final class BlastCategory implements IRecipeCategory<ShadowBlastFurnaceRecipe> {
+    public static final RecipeType<ShadowBlastFurnaceRecipe> BLAST_DATA_RECIPE_RECIPE_TYPE = RecipeType.create(PasterdreamMod.MODID, "shadow_blasting", ShadowBlastFurnaceRecipe.class);
     private final IGuiHelper helper;
 
     public BlastCategory(IGuiHelper helper) {
@@ -22,7 +31,7 @@ public final class BlastCategory implements IRecipeCategory<BlastDataRecipe> {
     }
 
     @Override
-    public RecipeType<BlastDataRecipe> getRecipeType() {
+    public RecipeType<ShadowBlastFurnaceRecipe> getRecipeType() {
         return BLAST_DATA_RECIPE_RECIPE_TYPE;
     }
 
@@ -44,18 +53,30 @@ public final class BlastCategory implements IRecipeCategory<BlastDataRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, BlastDataRecipe recipe, IFocusGroup group) {
+    public void setRecipe(IRecipeLayoutBuilder builder, ShadowBlastFurnaceRecipe recipe, IFocusGroup group) {
         /**
          * INPUT: 原料
          * OUTPUT: 产出物语
          * CATALYST: 燃料
          * READONLY: 只读
          */
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 5)       .addItemStack(recipe.item1);
-        builder.addSlot(RecipeIngredientRole.CATALYST, 1, 50)   .addItemStack(recipe.item2);
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 37, 86)     .addItemStack(recipe.item3);
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 86)     .addItemStack(recipe.item4);
-        builder.addSlot(RecipeIngredientRole.CATALYST, 109, 5)  .addItemStack(recipe.item5);
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 109, 50)   .addItemStack(recipe.item6);
+        ItemStack spendfuel = new ItemStack(PasterdreamModItems.NIGHTMARE_FUEL.get(),recipe.getSpendFuel());
+        ItemStack spendfluidfuel = recipe.getSpendFluidFuel() > 0?new ItemStack(PasterdreamModItems.SHADOW_LIQUID_BUCKET.get()):ItemStack.EMPTY;
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
+        builder.addSlot(RecipeIngredientRole.CATALYST, 1, 50).addItemStack(spendfuel);
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 37, 86).addItemStack(RecipeUtils.getResultItem(recipe));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 86)
+                .addItemStack(RecipeUtils.getByResultItem(recipe))
+                .addTooltipCallback((iRecipeSlotView,list)->{
+                    if(recipe.getByoutput_probability() > 0 && recipe.getByoutput_probability() < 1 && !iRecipeSlotView.isEmpty())
+                    {
+                        list.add(Component.translatable("jei.pasterdream.shadow_blast_furnace.probability",Math.floor(recipe.getByoutput_probability() * 100)).withStyle(ChatFormatting.GOLD));
+                    }
+                });
+        builder.addSlot(RecipeIngredientRole.CATALYST, 109, 5)
+                .addItemStack(spendfluidfuel)
+                .addTooltipCallback((iRecipeSlotView,list)->{
+                    list.add(Component.translatable("jei.pasterdream.shadow_blast_furnace.consumefluid",recipe.getSpendFluidFuel()).withStyle(ChatFormatting.GOLD));
+                });
     }
 }

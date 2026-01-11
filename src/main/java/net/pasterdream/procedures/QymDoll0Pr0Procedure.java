@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.PasterdreamMod;
 
@@ -46,7 +48,10 @@ public class QymDoll0Pr0Procedure {
 				if (world instanceof Level _level)
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() + 1));
+            if(entity instanceof Player pl)
+            {
+                SanCapability.addPlayerSanWithCheck(pl,1);
+            }
 			PasterdreamMod.queueServerWork(20, () -> {
 				if (!world.isClientSide()) {
 					BlockPos _bp = BlockPos.containing(x, y, z);

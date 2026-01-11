@@ -29,11 +29,10 @@ public class FurySpellPr1Procedure {
 			_level.sendParticles(ParticleTypes.END_ROD, x, (y + 2), z, 6, 2.5, 1, 2.5, 0.02);
 		{
 			final Vec3 _center = new Vec3(x, y, z);
-			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(8 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).toList();
-			for (Entity entityiterator : _entfound) {
-				if (entityiterator instanceof Player) {
-					if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
-						_entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.FURY_SPELL_BUFF.get(), 60, 0));
+			List<Player> _entfound = world.getEntitiesOfClass(Player.class, new AABB(_center, _center).inflate(8 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).toList();
+			for (Player entityiterator : _entfound) {
+				if (!entityiterator.level().isClientSide()) {
+                    entityiterator.addEffect(new MobEffectInstance(PasterdreamModMobEffects.FURY_SPELL_BUFF.get(), 60, 0));
 				}
 			}
 		}

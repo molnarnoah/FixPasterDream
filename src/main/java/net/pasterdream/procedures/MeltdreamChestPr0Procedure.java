@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.configuration.PasterdreamConfigCommonConfiguration;
 
@@ -109,7 +111,10 @@ public class MeltdreamChestPr0Procedure {
 					}
 				}
 			}
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() + 2));
+            if(entity instanceof Player pl)
+            {
+                MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(pl,2);
+            }
 		}
 		if ((entity.level().dimension()) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:dyedream_world")))) {
 			if (entity instanceof ServerPlayer _player) {

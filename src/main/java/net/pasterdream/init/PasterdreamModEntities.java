@@ -198,7 +198,7 @@ public class PasterdreamModEntities {
 			.setCustomClientFactory(LightningProjectileEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
 	public static final RegistryObject<EntityType<FurySpellProjectileEntity>> FURY_SPELL_PROJECTILE = register("projectile_fury_spell_projectile", EntityType.Builder.<FurySpellProjectileEntity>of(FurySpellProjectileEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(FurySpellProjectileEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
-	public static final RegistryObject<EntityType<FurySpellEntityEntity>> FURY_SPELL_ENTITY = register("fury_spell_entity", EntityType.Builder.<FurySpellEntityEntity>of(FurySpellEntityEntity::new, MobCategory.MONSTER)
+	public static final RegistryObject<EntityType<FurySpellEntityEntity>> FURY_SPELL_ENTITY = register("fury_spell_entity", EntityType.Builder.<FurySpellEntityEntity>of(FurySpellEntityEntity::new, MobCategory.MISC)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FurySpellEntityEntity::new).fireImmune().sized(2f, 0.1f));
 	public static final RegistryObject<EntityType<IceSpellProjectileEntity>> ICE_SPELL_PROJECTILE = register("projectile_ice_spell_projectile", EntityType.Builder.<IceSpellProjectileEntity>of(IceSpellProjectileEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(IceSpellProjectileEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
@@ -291,7 +291,6 @@ public class PasterdreamModEntities {
 		event.put(TERRASWORD_WAVE.get(), TerraswordWaveEntity.createAttributes().build());
 		event.put(SHADOW_MAGICBALL.get(), ShadowMagicballEntity.createAttributes().build());
 		event.put(HEALING_SPELL_ENTITY.get(), HealingSpellEntityEntity.createAttributes().build());
-		event.put(FURY_SPELL_ENTITY.get(), FurySpellEntityEntity.createAttributes().build());
 		event.put(FOX_FIRE.get(), FoxFireEntity.createAttributes().build());
 		event.put(SMALL_STONE_SPIRIT.get(), SmallStoneSpiritEntity.createAttributes().build());
 	}

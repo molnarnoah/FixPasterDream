@@ -15,11 +15,23 @@ import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
+import net.minecraftforge.common.util.ITeleporter;
 
 public class WorldSpawnPr0Procedure {
 	public static void execute(LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
+        if (!entity.isAlive() || entity.level().isClientSide()) {
+            return;
+        }
+        if (entity.isPassenger() || entity.isVehicle() || !entity.canChangeDimensions()) {
+            return;
+        }
+        /*ResourceKey<Level> destination = ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:dyedream_world"));
+        ServerLevel serverWorld = entity.getCommandSenderWorld().getServer().getLevel(destination);
+        if (serverWorld == null)
+            return;
+        entity.changeDimension(serverWorld,new ITeleporter(){});*/
 		if (entity instanceof ServerPlayer _player && !_player.level().isClientSide()) {
 			ResourceKey<Level> destinationType = ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:dyedream_world"));
 			if (_player.level().dimension() == destinationType)

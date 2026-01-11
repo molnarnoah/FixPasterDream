@@ -1,5 +1,11 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.pasterdream.capability.SanCapability;
+import net.pasterdream.init.PasterdreamModAttributes;
+import net.pasterdream.init.PasterdreamModGameRules;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.configuration.PasterdreamConfigCommonConfiguration;
 
@@ -9,7 +15,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.TickEvent;
 
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nullable;
@@ -23,22 +28,18 @@ public class PlayerTotalTickUpdateProcedure {
 		}
 	}
 
-	public static void execute(LevelAccessor world, Entity entity) {
+	public static void execute(Level world, Player entity) {
 		execute(null, world, entity);
 	}
 
-	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
+	private static void execute(@Nullable Event event, Level world, Player entity) {
 		if (entity == null)
 			return;
-		if (entity.getPersistentData().getDouble("pasterdream_player_total_tick_10") >= (double) PasterdreamConfigCommonConfiguration.PLAYER_TOTAL_TICK_UPDATE.get()) {
-			entity.getPersistentData().putDouble("pasterdream_player_total_tick_10", 0);
-			SanPr0Procedure.execute(world, entity);
-			if ((entity instanceof LivingEntity _livEnt3 && _livEnt3.hasEffect(PasterdreamModMobEffects.WINDPROOF_BUFF.get())) == false) {
+		if (entity.tickCount % PasterdreamConfigCommonConfiguration.PLAYER_TOTAL_TICK_UPDATE.get() == 0) {
+			if (!entity.hasEffect(PasterdreamModMobEffects.WINDPROOF_BUFF.get())) {
 				WindDirectionPr1Procedure.execute(world, entity);
 				WindDirectionPr2Procedure.execute(world, entity);
 			}
-		} else {
-			entity.getPersistentData().putDouble("pasterdream_player_total_tick_10", (entity.getPersistentData().getDouble("pasterdream_player_total_tick_10") + 1));
 		}
 	}
 }

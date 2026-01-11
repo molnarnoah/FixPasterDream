@@ -23,7 +23,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_0",
+          "name": "pasterdream:cream_buncake",
           "weight": 2,
           "functions": [
             {
@@ -37,7 +37,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_1",
+          "name": "pasterdream:berry_buncake",
           "weight": 2,
           "functions": [
             {
@@ -51,7 +51,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_2",
+          "name": "pasterdream:potato_buncake",
           "weight": 2,
           "functions": [
             {
@@ -65,7 +65,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_3",
+          "name": "pasterdream:melon_buncake",
           "weight": 2,
           "functions": [
             {
@@ -79,7 +79,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_4",
+          "name": "pasterdream:pumpkin_buncake",
           "weight": 2,
           "functions": [
             {
@@ -93,7 +93,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_5",
+          "name": "pasterdream:glow_berry_buncake",
           "weight": 2,
           "functions": [
             {
@@ -107,7 +107,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_6",
+          "name": "pasterdream:dyedream_fruit_buncake",
           "weight": 2,
           "functions": [
             {

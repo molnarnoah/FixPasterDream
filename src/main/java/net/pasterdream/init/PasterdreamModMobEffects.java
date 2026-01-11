@@ -4,46 +4,7 @@
  */
 package net.pasterdream.init;
 
-import net.pasterdream.potion.WindproofBuffMobEffect;
-import net.pasterdream.potion.VulnerabilityBuffMobEffect;
-import net.pasterdream.potion.TurnbackCloakBuffMobEffect;
-import net.pasterdream.potion.TranceBuffMobEffect;
-import net.pasterdream.potion.TeleportationBuffMobEffect;
-import net.pasterdream.potion.TailwindBuffMobEffect;
-import net.pasterdream.potion.SnowVowBuffMobEffect;
-import net.pasterdream.potion.ShadowSpyonBuffMobEffect;
-import net.pasterdream.potion.ShadowSilenceBuffMobEffect;
-import net.pasterdream.potion.SculkArmorBuffMobEffect;
-import net.pasterdream.potion.RestrainmoveBlockBuffMobEffect;
-import net.pasterdream.potion.RestBuffMobEffect;
-import net.pasterdream.potion.RapidReactionMobEffect;
-import net.pasterdream.potion.MementoBuffMobEffect;
-import net.pasterdream.potion.MachineWingEffectMobEffect;
-import net.pasterdream.potion.LethargyBuffMobEffect;
-import net.pasterdream.potion.InsandBuffMobEffect;
-import net.pasterdream.potion.IceSpellBuffMobEffect;
-import net.pasterdream.potion.GuardBlockBuffMobEffect;
-import net.pasterdream.potion.GrailBuffMobEffect;
-import net.pasterdream.potion.GoldenrodTeaBuffMobEffect;
-import net.pasterdream.potion.FurySpellBuffMobEffect;
-import net.pasterdream.potion.FondillusionBuffMobEffect;
-import net.pasterdream.potion.FlareupBuffMobEffect;
-import net.pasterdream.potion.ExpupBuffMobEffect;
-import net.pasterdream.potion.EvasionCloakBuffMobEffect;
-import net.pasterdream.potion.EvasionBuffMobEffect;
-import net.pasterdream.potion.DyedreamupBuffMobEffect;
-import net.pasterdream.potion.DyedreamPerfumeBuffMobEffect;
-import net.pasterdream.potion.DyedreamArmorBuffMobEffect;
-import net.pasterdream.potion.DreamwishBuffMobEffect;
-import net.pasterdream.potion.DreamharpOfWandererBuffMobEffect;
-import net.pasterdream.potion.DeadwindBuffMobEffect;
-import net.pasterdream.potion.CounterattackBuffMobEffect;
-import net.pasterdream.potion.CookBuffMobEffect;
-import net.pasterdream.potion.ConfusionBuffMobEffect;
-import net.pasterdream.potion.CloudmistBuffMobEffect;
-import net.pasterdream.potion.CheerupBuffMobEffect;
-import net.pasterdream.potion.BobojiBuffMobEffect;
-import net.pasterdream.potion.BindBuffMobEffect;
+import net.pasterdream.potion.*;
 import net.pasterdream.PasterdreamMod;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -69,8 +30,9 @@ public class PasterdreamModMobEffects {
 	public static final RegistryObject<MobEffect> TRANCE_BUFF = REGISTRY.register("trance_buff", () -> new TranceBuffMobEffect());
 	public static final RegistryObject<MobEffect> LETHARGY_BUFF = REGISTRY.register("lethargy_buff", () -> new LethargyBuffMobEffect());
 	public static final RegistryObject<MobEffect> CHEERUP_BUFF = REGISTRY.register("cheerup_buff", () -> new CheerupBuffMobEffect());
-	public static final RegistryObject<MobEffect> REST_BUFF = REGISTRY.register("rest_buff", () -> new RestBuffMobEffect());
-	public static final RegistryObject<MobEffect> COOK_BUFF = REGISTRY.register("cook_buff", () -> new CookBuffMobEffect());
+	public static final RegistryObject<MobEffect> REST_BUFF = REGISTRY.register("rest_buff", () -> new RestBuffMobEffect(1));
+    public static final RegistryObject<MobEffect> REST_BUFF_IN_DARK = REGISTRY.register("rest_buff_in_dark", () -> new RestBuffMobEffect(2));
+    public static final RegistryObject<MobEffect> COOK_BUFF = REGISTRY.register("cook_buff", () -> new CookBuffMobEffect());
 	public static final RegistryObject<MobEffect> GUARD_BLOCK_BUFF = REGISTRY.register("guard_block_buff", () -> new GuardBlockBuffMobEffect());
 	public static final RegistryObject<MobEffect> RESTRAINMOVE_BLOCK_BUFF = REGISTRY.register("restrainmove_block_buff", () -> new RestrainmoveBlockBuffMobEffect());
 	public static final RegistryObject<MobEffect> GOLDENROD_TEA_BUFF = REGISTRY.register("goldenrod_tea_buff", () -> new GoldenrodTeaBuffMobEffect());
@@ -94,4 +56,10 @@ public class PasterdreamModMobEffects {
 	public static final RegistryObject<MobEffect> DEADWIND_BUFF = REGISTRY.register("deadwind_buff", () -> new DeadwindBuffMobEffect());
 	public static final RegistryObject<MobEffect> WINDPROOF_BUFF = REGISTRY.register("windproof_buff", () -> new WindproofBuffMobEffect());
 	public static final RegistryObject<MobEffect> BIND_BUFF = REGISTRY.register("bind_buff", () -> new BindBuffMobEffect());
+    public static final RegistryObject<MobEffect> OPPRESSION_BUFF = REGISTRY.register("oppression_buff", OppressionMobEffect::new);
+    public static final RegistryObject<MobEffect> SAN_INCREASE = REGISTRY.register("san_increase", () -> new SanVaryMobEffect(true));
+    public static final RegistryObject<MobEffect> SAN_DECREASE = REGISTRY.register("san_decrease", () -> new SanVaryMobEffect(false));
+    public static final RegistryObject<MobEffect> MELT_DREAM_ENERGY_INCREASE = REGISTRY.register("melt_dream_energy_increase", () -> new MeltDreamEnergyVaryMobEffect (true));
+    public static final RegistryObject<MobEffect> MELT_DREAM_ENERGY_DECREASE = REGISTRY.register("melt_dream_energy_decrease", () -> new MeltDreamEnergyVaryMobEffect (false));
+
 }

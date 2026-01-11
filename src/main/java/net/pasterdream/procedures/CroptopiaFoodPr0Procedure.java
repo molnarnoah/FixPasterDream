@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModAttributes;
 
@@ -34,10 +36,9 @@ public class CroptopiaFoodPr0Procedure {
 		if (entity == null)
 			return;
 		if (itemstack.is(ItemTags.create(new ResourceLocation("croptopia:advancements_food_big"))) || itemstack.is(ItemTags.create(new ResourceLocation("pasterdream:delight_cooked_tag")))) {
-			if ((entity instanceof LivingEntity && ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()) != null) == true) {
-				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-					_entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false));
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() + 1));
+			if (entity instanceof Player pl && !pl.level().isClientSide() && pl.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).isPresent()) {
+				pl.addEffect(new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false));
+                SanCapability.addPlayerSanWithCheck(pl,1);
 			}
 		}
 	}

@@ -358,7 +358,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:sandwich_0",
+          "name": "pasterdream:sandwich",
           "weight": 1,
           "functions": [
             {

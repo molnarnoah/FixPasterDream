@@ -13,29 +13,12 @@
  */
 package net.pasterdream;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.pasterdream.data.PDBlockTagProvider;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
+import net.pasterdream.capability.SanCapability;
+import net.pasterdream.init.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-
-import net.pasterdream.init.PasterdreamModTabs;
-import net.pasterdream.init.PasterdreamModSounds;
-import net.pasterdream.init.PasterdreamModPotions;
-import net.pasterdream.init.PasterdreamModParticleTypes;
-import net.pasterdream.init.PasterdreamModPaintings;
-import net.pasterdream.init.PasterdreamModMobEffects;
-import net.pasterdream.init.PasterdreamModMenus;
-import net.pasterdream.init.PasterdreamModItems;
-import net.pasterdream.init.PasterdreamModFluids;
-import net.pasterdream.init.PasterdreamModFluidTypes;
-import net.pasterdream.init.PasterdreamModEntities;
-import net.pasterdream.init.PasterdreamModEnchantments;
-import net.pasterdream.init.PasterdreamModBlocks;
-import net.pasterdream.init.PasterdreamModBlockEntities;
 
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.network.NetworkRegistry;
@@ -68,6 +51,8 @@ public class PasterdreamMod {
 	public PasterdreamMod() {
 		MinecraftForge.EVENT_BUS.register(this);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::commonSetup);
+
 		PasterdreamModSounds.REGISTRY.register(bus);
 		PasterdreamModBlocks.REGISTRY.register(bus);
 		PasterdreamModBlockEntities.REGISTRY.register(bus);
@@ -75,17 +60,21 @@ public class PasterdreamMod {
 		PasterdreamModEntities.REGISTRY.register(bus);
 		PasterdreamModEnchantments.REGISTRY.register(bus);
 		PasterdreamModTabs.REGISTRY.register(bus);
-
 		PasterdreamModMobEffects.REGISTRY.register(bus);
 		PasterdreamModPotions.REGISTRY.register(bus);
 		PasterdreamModPaintings.REGISTRY.register(bus);
 		PasterdreamModParticleTypes.REGISTRY.register(bus);
-
+        PasterdreamModRecipeType.register(bus);
+        PasterdreamModRecipeSerializers.register(bus);
 		PasterdreamModMenus.REGISTRY.register(bus);
 		PasterdreamModFluids.REGISTRY.register(bus);
 		PasterdreamModFluidTypes.REGISTRY.register(bus);
 	}
-
+    private void commonSetup(final FMLCommonSetupEvent event)
+    {
+        SanCapability.init();
+        MeltDreamEnergyCapability.init();
+    }
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 	private static int messageID = 0;
@@ -113,15 +102,5 @@ public class PasterdreamMod {
 			actions.forEach(e -> e.getKey().run());
 			workQueue.removeAll(actions);
 		}
-	}
-	@SubscribeEvent
-	public void gatherData(final GatherDataEvent event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
-		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		boolean server = event.includeServer();
-		generator.addProvider(server, new PDBlockTagProvider(packOutput, lookupProvider, existingFileHelper));
-
 	}
 }

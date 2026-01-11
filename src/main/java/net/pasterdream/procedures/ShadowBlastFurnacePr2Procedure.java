@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
-
+@Deprecated
 public class ShadowBlastFurnacePr2Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z) {
 		ShadowBlastFurnaceRecipePr0Procedure.execute(world, x, y, z);

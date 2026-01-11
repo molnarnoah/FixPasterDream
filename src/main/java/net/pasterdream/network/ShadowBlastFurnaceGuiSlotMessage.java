@@ -17,7 +17,7 @@ import net.minecraft.core.BlockPos;
 
 import java.util.function.Supplier;
 import java.util.HashMap;
-
+@Deprecated
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShadowBlastFurnaceGuiSlotMessage {
 	private final int slotID, x, y, z, changeType, meta;

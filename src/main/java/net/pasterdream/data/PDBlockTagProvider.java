@@ -103,7 +103,8 @@ public class PDBlockTagProvider extends BlockTagsProvider {
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS.get())
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_STAIRS.get())
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_SLAB.get())
-                .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_WALL.get());
+                .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_WALL.get())
+                .add(PasterdreamModBlocks.SOUL_ORE.get());
         //挖掘等级2
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(PasterdreamModBlocks.WIND_IRON_BLOCK.get())
@@ -118,7 +119,10 @@ public class PDBlockTagProvider extends BlockTagsProvider {
                 .add(PasterdreamModBlocks.TITANIUM_ORE.get())
                 .add(PasterdreamModBlocks.TITANIUM_BLOCK.get())
                 .add(PasterdreamModBlocks.RAW_TITANIUM_BLOCK.get())
-                .add(PasterdreamModBlocks.DYEDREAM_BLOCK.get());
+                .add(PasterdreamModBlocks.DYEDREAM_BLOCK.get())
+                .add(PasterdreamModBlocks.DEEPSLATE_TITANIUM_ORE.get())
+                .add(PasterdreamModBlocks.WINDRUNNER_CRYSTAL_ORE.get())
+                .add(PasterdreamModBlocks.WINDRUNNER_CRYSTAL_BLOCK.get());
         //挖掘等级4
         tag(Tags.Blocks.NEEDS_NETHERITE_TOOL)
                 .add(PasterdreamModBlocks.RUST_BLACK_METAL_BLOCK_WALL.get())
@@ -132,6 +136,14 @@ public class PDBlockTagProvider extends BlockTagsProvider {
                 .add(PasterdreamModBlocks.ARMOR_WRECK_BLOCK_0.get());
         //需要镐子
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(PasterdreamModBlocks.DREAM_CAULDRON.get())
+                .add(PasterdreamModBlocks.SHADOW_DUNGEON_PORTAL.get())
+                .add(PasterdreamModBlocks.BROKEN_SHADOW_DUNGEON_PROTAL.get())
+                .add(PasterdreamModBlocks.GUARD_CRYSTAL.get())
+                .add(PasterdreamModBlocks.SHADOW_BLAST_FURNACE_CORE.get())
+                .add(PasterdreamModBlocks.SHADOW_CHEST.get())
+                .add(PasterdreamModBlocks.MELTDREAM_CHEST.get())
+                .add(PasterdreamModBlocks.MELTDREAM_CHEST_OPEN.get())
                 .add(PasterdreamModBlocks.WORKSHOP_GRIND.get())
                 .add(PasterdreamModBlocks.WORKSHOP_CAULDEON.get())
                 .add(PasterdreamModBlocks.WORKSHOP_BLAST.get())
@@ -231,7 +243,10 @@ public class PDBlockTagProvider extends BlockTagsProvider {
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_STAIRS.get())
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_SLAB.get())
                 .add(PasterdreamModBlocks.SHADOW_STONE_BRICKS_WALL.get())
-                .add(PasterdreamModBlocks.AMBER_CANDY_ORE.get());
+                .add(PasterdreamModBlocks.AMBER_CANDY_ORE.get())
+                .add(PasterdreamModBlocks.DEEPSLATE_TITANIUM_ORE.get())
+                .add(PasterdreamModBlocks.WINDRUNNER_CRYSTAL_ORE.get())
+                .add(PasterdreamModBlocks.WINDRUNNER_CRYSTAL_BLOCK.get());
         //需要斧头
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(PasterdreamModBlocks.WEAPON_WORKSHOP.get())
@@ -240,10 +255,15 @@ public class PDBlockTagProvider extends BlockTagsProvider {
                 .add(PasterdreamModBlocks.SHADOW_BLAST_FURNACE.get())
                 .add(PasterdreamModBlocks.FORCED_TOWER.get())
                 .add(PasterdreamModBlocks.DYEDREAM_DESK.get())
-                .add(PasterdreamModBlocks.DREAM_ACCUMULATOR.get());
+                .add(PasterdreamModBlocks.DREAM_ACCUMULATOR.get())
+                .add(PasterdreamModBlocks.RESEARCH_TABLE.get());
         //需要铲子
         tag(BlockTags.MINEABLE_WITH_SHOVEL);
         //需要锄头
         tag(BlockTags.MINEABLE_WITH_HOE);
+    }
+    @Override
+    public String getName() {
+        return "Paster dream's Block Tags";
     }
 }

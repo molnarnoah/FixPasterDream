@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModItems;
 import net.pasterdream.init.PasterdreamModBlocks;
@@ -133,11 +134,10 @@ public class SleepPr0Procedure {
 					PasterdreamMod.queueServerWork(95, () -> {
 						world.setBlock(BlockPos.containing(x, y, z), Blocks.AIR.defaultBlockState(), 3);
 						world.setBlock(BlockPos.containing(x, y, z), Blocks.BLACK_BED.defaultBlockState(), 3);
-						if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() >= 10) {
-							((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 10));
-						} else {
-							((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue(0);
-						}
+                        if(entity instanceof Player pl)
+                        {
+                            SanCapability.addPlayerSanWithCheck(pl, -10);
+                        }
 						WorldSpawnPr1Procedure.execute(world, entity);
 					});
 				}

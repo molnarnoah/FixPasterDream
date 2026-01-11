@@ -1,5 +1,7 @@
 package net.pasterdream.client.gui;
 
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.pasterdream.block.entity.ShadowBlastFurnaceTileEntity;
 import net.pasterdream.world.inventory.ShadowBlastFurnaceGuiMenu;
 
 import net.minecraft.world.level.Level;
@@ -37,15 +39,34 @@ public class ShadowBlastFurnaceGuiScreen extends AbstractContainerScreen<ShadowB
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 	}
-
+    private static final ResourceLocation gui = new ResourceLocation("pasterdream:textures/screens/shadow_blast_furnace_gui.png");
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int gx, int gy) {
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 
-		guiGraphics.blit(new ResourceLocation("pasterdream:textures/screens/shadow_blast_furnace_gui.png"), this.leftPos + 0, this.topPos + 0, 0, 0, 176, 216, 176, 216);
-
+		guiGraphics.blit(gui, this.leftPos , this.topPos, 0, 0, 176, 216, 236, 216);
+        if(this.getMenu().getBoundBlockEntity() instanceof ShadowBlastFurnaceTileEntity SBFTEntity){
+            if(SBFTEntity.getWorkRecipeID() != null){
+                int cap = SBFTEntity.getNeedBlastingTime();
+                int now = SBFTEntity.getBlastingTime();
+                if(cap > 0)
+                {
+                    int percent_height = (int) Math.nextUp(34.0 * now / cap);
+                    guiGraphics.blit(gui, this.leftPos + 68, this.topPos + 71, 176, 0, 38, percent_height, 236, 216);
+                }
+            }
+            SBFTEntity.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(iFluidHandler->{
+                int cap = iFluidHandler.getTankCapacity(0);
+                int now = iFluidHandler.getFluidInTank(0).getAmount();
+                if(cap > 0)
+                {
+                    int percent_height = (int) Math.nextUp(35.0 * now / cap);
+                    guiGraphics.blit(gui, this.leftPos + 99, this.topPos + 46 + 35 - percent_height, 176, 34 + 35 - percent_height, 10, percent_height, 236, 216);
+                }
+            });
+        }
 		RenderSystem.disableBlend();
 	}
 

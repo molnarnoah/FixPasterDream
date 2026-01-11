@@ -1,5 +1,9 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModItems;
 import net.pasterdream.init.PasterdreamModAttributes;
@@ -20,17 +24,26 @@ public class MementoItemPr0Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		if (itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_01.get() || itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_06.get() || itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_10.get()
+		if (itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_01.get()
+                || itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_06.get()
+                || itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_10.get()
 				|| itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_05.get()) {
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() + 10));
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() + 10));
-		}
+			if(entity instanceof ServerPlayer sp)
+            {
+                SanCapability.addPlayerSanWithCheck(sp,10);
+                MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(sp,10);
+            }
+        }
 		if (itemstack.getItem() == PasterdreamModItems.MEMENTO_ITEM_07.get()) {
-			if (Math.random() <= 0.01) {
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 100));
-			} else {
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() + 20));
-			}
+            if(entity instanceof ServerPlayer sp)
+            {
+                if (Mth.nextDouble(sp.getRandom(),0,1) <= 0.01) {
+                    SanCapability.addPlayerSanWithCheck(sp,-100);
+                } else {
+                    SanCapability.addPlayerSanWithCheck(sp,20);
+                }
+            }
+
 		}
 		if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 			_entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.MEMENTO_BUFF.get(), 3600, 0));

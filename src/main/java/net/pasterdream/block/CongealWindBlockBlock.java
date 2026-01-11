@@ -1,6 +1,7 @@
 
 package net.pasterdream.block;
 
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
+import net.minecraftforge.common.ToolActions;
 
 import java.util.List;
 import java.util.Collections;
@@ -37,5 +39,15 @@ public class CongealWindBlockBlock extends Block {
 		if (!dropsOriginal.isEmpty())
 			return dropsOriginal;
 		return Collections.singletonList(new ItemStack(this, 1));
+	}
+
+	@Override
+	public float getDestroyProgress(BlockState state, Player player, BlockGetter getter, BlockPos pos) {
+		float f = super.getDestroyProgress(state, player, getter, pos);
+		if(player.getMainHandItem().canPerformAction(ToolActions.HOE_DIG))
+		{
+			f *= 2f;
+		}
+		return f;
 	}
 }

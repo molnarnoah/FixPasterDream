@@ -1,10 +1,14 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -39,7 +43,7 @@ public class AllkindsRingItem extends Item implements ICurioItem {
 	public static final UUID BLOCK_REACH_UUID = UUID.fromString("0673e66c-d230-11ed-aa81-325096b39f47");
 	public static final AttributeModifier modifier3 = new AttributeModifier(BLOCK_REACH_UUID, "generic.blockReach", 0.5F, AttributeModifier.Operation.ADDITION);
 	public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("0673e6c6-d230-11ed-9244-325096b39f47");
-	public static final AttributeModifier modifier4 = new AttributeModifier(MOVEMENT_SPEED_UUID, "generic.movementSpeed", 0.005F, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier modifier4 = new AttributeModifier(MOVEMENT_SPEED_UUID, "generic.movementSpeed", 0.05F, AttributeModifier.Operation.MULTIPLY_BASE);
 	public static final UUID SKILLCD_UUID = UUID.fromString("0673e734-d230-11ed-8007-325096b39f47");
 	public static final AttributeModifier modifier5 = new AttributeModifier(SKILLCD_UUID, "pasterdream.skillCd", -0.05F, AttributeModifier.Operation.ADDITION);
 	public static final UUID SKILLMULTIPLIER_UUID = UUID.fromString("0673e798-d230-11ed-b8cb-325096b39f47");
@@ -51,91 +55,32 @@ public class AllkindsRingItem extends Item implements ICurioItem {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(Component.literal("\u54C1\u8D28\uFF1A\u00A7c\u4F20\u8BF4 \u2605\u2605\u2605\u2605\u2605\u2605\u2605"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6700\u5927\u751F\u547D\u503C+4"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u8FD1\u6218\u653B\u51FB\u529B+2"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u653B\u51FB\u901F\u5EA6+0.1"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u653B\u51FB\u8DDD\u79BB+0.2"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u89E6\u53CA\u534A\u5F84+0.5"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u79FB\u52A8\u901F\u5EA6+5%"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6280\u80FD\u51B7\u5374-5%"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6218\u6280\u4F24\u5BB3\u500D\u7387+5%"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u77AC\u8EAB\u672F\u51B7\u5374-5%"));
-		list.add(Component.literal("\u00A77\u00A7o\u805A\u4E07\u8C61\u4E4B\u529B \u94F8\u4EE5\u6B64\u6212"));
-		list.add(Component.literal("\u00A77\u00A7o-- \u65AF\u5353\u8D1D\u8389\u25AA\u9EDB\u6B27\u6069"));
-
+        list.add(Component.literal("\u00A77\u00A7o\u805A\u4E07\u8C61\u4E4B\u529B \u94F8\u4EE5\u6B64\u6212"));
+        list.add(Component.literal("\u00A77\u00A7o-- \u65AF\u5353\u8D1D\u8389\u25AA\u9EDB\u6B27\u6069"));
 	}
-
-	@Override
-	public boolean canEquip(SlotContext context, ItemStack itemStack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ATTACK_DAMAGE);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ATTACK_SPEED);
-			AttributeInstance instance2 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
-			AttributeInstance instance3 = player.getAttribute(ForgeMod.BLOCK_REACH.get());
-			AttributeInstance instance4 = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance5 = player.getAttribute(PasterdreamModAttributes.SKILLCD.get());
-			AttributeInstance instance6 = player.getAttribute(PasterdreamModAttributes.SKILLMULTIPLIER.get());
-			AttributeInstance instance7 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCD.get());
-			return instance.getModifier(modifier.getId()) == null 
-			&& instance0.getModifier(modifier0.getId()) == null 
-			&& instance1.getModifier(modifier1.getId()) == null
-			&& instance2.getModifier(modifier2.getId()) == null
-			&& instance3.getModifier(modifier3.getId()) == null
-			&& instance4.getModifier(modifier4.getId()) == null
-			&& instance5.getModifier(modifier5.getId()) == null
-			&& instance6.getModifier(modifier6.getId()) == null
-			&& instance7.getModifier(modifier7.getId()) == null;
-		}
-		return false;
-	}
-
-	@Override
-	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ATTACK_DAMAGE);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ATTACK_SPEED);
-			AttributeInstance instance2 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
-			AttributeInstance instance3 = player.getAttribute(ForgeMod.BLOCK_REACH.get());
-			AttributeInstance instance4 = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance5 = player.getAttribute(PasterdreamModAttributes.SKILLCD.get());
-			AttributeInstance instance6 = player.getAttribute(PasterdreamModAttributes.SKILLMULTIPLIER.get());
-			AttributeInstance instance7 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCD.get());
-			if (instance.getModifier(modifier.getId()) == null) instance.addPermanentModifier(modifier);
-			if (instance0.getModifier(modifier0.getId()) == null) instance0.addPermanentModifier(modifier0);
-			if (instance1.getModifier(modifier1.getId()) == null) instance1.addPermanentModifier(modifier1);
-			if (instance2.getModifier(modifier2.getId()) == null) instance2.addPermanentModifier(modifier2);
-			if (instance3.getModifier(modifier3.getId()) == null) instance3.addPermanentModifier(modifier3);
-			if (instance4.getModifier(modifier4.getId()) == null) instance4.addPermanentModifier(modifier4);
-			if (instance5.getModifier(modifier5.getId()) == null) instance5.addPermanentModifier(modifier5);
-			if (instance6.getModifier(modifier6.getId()) == null) instance6.addPermanentModifier(modifier6);
-			if (instance7.getModifier(modifier7.getId()) == null) instance7.addPermanentModifier(modifier7);
-		}
-	}
-
-	@Override
-	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ATTACK_DAMAGE);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ATTACK_SPEED);
-			AttributeInstance instance2 = player.getAttribute(ForgeMod.ENTITY_REACH.get());
-			AttributeInstance instance3 = player.getAttribute(ForgeMod.BLOCK_REACH.get());
-			AttributeInstance instance4 = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance5 = player.getAttribute(PasterdreamModAttributes.SKILLCD.get());
-			AttributeInstance instance6 = player.getAttribute(PasterdreamModAttributes.SKILLMULTIPLIER.get());
-			AttributeInstance instance7 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCD.get());
-			instance.removeModifier(modifier.getId());
-			instance0.removeModifier(modifier0.getId());
-			instance1.removeModifier(modifier1.getId());
-			instance2.removeModifier(modifier2.getId());
-			instance3.removeModifier(modifier3.getId());
-			instance4.removeModifier(modifier4.getId());
-			instance5.removeModifier(modifier5.getId());
-			instance6.removeModifier(modifier6.getId());
-			instance7.removeModifier(modifier7.getId());
-			player.setHealth(player.getMaxHealth());
-		}
-	}
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        if(slotContext.entity() != null)
+        {
+            return CuriosApi.getCuriosInventory(slotContext.entity()).map(handler ->
+                            handler.findFirstCurio(stack.getItem()).isEmpty())
+                    .orElse(true);
+        }
+        return true;
+    }
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext,
+                                                                        UUID uuid, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+        attributeModifiers.put(Attributes.MAX_HEALTH,modifier);
+        attributeModifiers.put(Attributes.ATTACK_DAMAGE,modifier0);
+        attributeModifiers.put(Attributes.ATTACK_SPEED,modifier1);
+        attributeModifiers.put(ForgeMod.ENTITY_REACH.get(),modifier2);
+        attributeModifiers.put(ForgeMod.BLOCK_REACH.get(),modifier3);
+        attributeModifiers.put(Attributes.MOVEMENT_SPEED,modifier4);
+        attributeModifiers.put(PasterdreamModAttributes.SKILLCD.get(),modifier5);
+        attributeModifiers.put(PasterdreamModAttributes.SKILLMULTIPLIER.get(),modifier6);
+        attributeModifiers.put(PasterdreamModAttributes.TELEPORTATIONCD.get(),modifier7);
+        return attributeModifiers;
+    }
 }

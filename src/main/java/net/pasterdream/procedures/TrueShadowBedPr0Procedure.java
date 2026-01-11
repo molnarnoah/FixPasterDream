@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.world.inventory.ShadowSelectEndMenu;
 import net.pasterdream.init.PasterdreamModBlocks;
 import net.pasterdream.init.PasterdreamModAttributes;
@@ -44,12 +45,8 @@ public class TrueShadowBedPr0Procedure {
 					}
 				}.getValue(world, BlockPos.containing(x, y + 2, z), "key")) == true && entity instanceof ServerPlayer _plr6 && _plr6.level() instanceof ServerLevel
 						&& _plr6.getAdvancements().getOrStartProgress(_plr6.server.getAdvancements().getAdvancement(new ResourceLocation("pasterdream:achievement_hide_9"))).isDone()) {
-					if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() >= 10) {
-						((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 10));
-					} else {
-						((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue(0);
-					}
-					WorldSpawnPr1Procedure.execute(world, entity);
+                    SanCapability.addPlayerSanWithCheck(_plr6, -10);
+                    WorldSpawnPr1Procedure.execute(world, entity);
 				}
 			}
 		} else {

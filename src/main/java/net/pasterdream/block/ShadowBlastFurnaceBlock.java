@@ -1,6 +1,16 @@
 
 package net.pasterdream.block;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.pasterdream.recipes.dark_smithing.ShadowBlastFurnaceRecipe;
 import net.pasterdream.world.inventory.ShadowBlastFurnaceGuiMenu;
 import net.pasterdream.procedures.ShadowBlastFurnacePr2Procedure;
 import net.pasterdream.procedures.ShadowBlastFurnacePr1Procedure;
@@ -49,15 +59,22 @@ import javax.annotation.Nullable;
 
 import java.util.List;
 import java.util.Collections;
+import java.util.Optional;
 
 import io.netty.buffer.Unpooled;
 
 public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBlock {
-	public static final IntegerProperty ANIMATION = IntegerProperty.create("animation", 0, (int) 4);
+	public static final IntegerProperty ANIMATION = IntegerProperty.create("animation", 0,  4);
+    public static final BooleanProperty WORKING = BooleanProperty.create("working");
 
 	public ShadowBlastFurnaceBlock() {
 		super(BlockBehaviour.Properties.of().sound(SoundType.DEEPSLATE).strength(10f).requiresCorrectToolForDrops().noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
-	}
+        this.registerDefaultState(this
+                .stateDefinition
+                .any()
+                .setValue(WORKING, false)
+                .setValue(ANIMATION, 0));
+    }
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
@@ -89,6 +106,7 @@ public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBl
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ANIMATION);
+        builder.add(WORKING);
 	}
 
 	@Override
@@ -108,18 +126,7 @@ public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBl
 	@Override
 	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
 		super.onPlace(blockstate, world, pos, oldState, moving);
-		world.scheduleTick(pos, this, 10);
-	}
-
-	@Override
-	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
-		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		ShadowBlastFurnacePr2Procedure.execute(world, x, y, z);
-		world.scheduleTick(pos, this, 10);
+		//world.scheduleTick(pos, this, 10);
 	}
 
 	@Override
@@ -132,17 +139,7 @@ public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBl
 	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
 		super.use(blockstate, world, pos, entity, hand, hit);
 		if (entity instanceof ServerPlayer player) {
-			NetworkHooks.openScreen(player, new MenuProvider() {
-				@Override
-				public Component getDisplayName() {
-					return Component.literal("Shadow Blast Furnace");
-				}
-
-				@Override
-				public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new ShadowBlastFurnaceGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-				}
-			}, pos);
+            NetworkHooks.openScreen(player, this.getMenuProvider(blockstate,world,pos), pos);
 		}
 		int x = pos.getX();
 		int y = pos.getY();
@@ -154,12 +151,6 @@ public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBl
 
 		ShadowBlastFurnacePr1Procedure.execute(world, x, y, z);
 		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-		return tileEntity instanceof MenuProvider menuProvider ? menuProvider : null;
 	}
 
 	@Override
@@ -194,4 +185,24 @@ public class ShadowBlastFurnaceBlock extends BaseEntityBlock implements EntityBl
 		else
 			return 0;
 	}
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (state.getValue(ShadowBlastFurnaceBlock.WORKING)) {
+            double x = pos.getX() + 0.5D;
+            double y = pos.getY();
+            double z = pos.getZ() + 0.5D;
+            if (random.nextInt(10) == 0) {
+                level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.blastfurnace.fire_crackle")), SoundSource.BLOCKS, 2, 1, false);
+            }
+        }
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
+        if (level.isClientSide) {
+            return createTickerHelper(blockEntity, PasterdreamModBlockEntities.SHADOW_BLAST_FURNACE.get(), ShadowBlastFurnaceTileEntity::animationTick);
+        }
+        return createTickerHelper(blockEntity, PasterdreamModBlockEntities.SHADOW_BLAST_FURNACE.get(), ShadowBlastFurnaceTileEntity::blastingTick);
+    }
 }

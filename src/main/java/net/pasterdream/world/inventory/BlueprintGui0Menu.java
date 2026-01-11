@@ -1,6 +1,18 @@
 
 package net.pasterdream.world.inventory;
 
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.pasterdream.PasterdreamMod;
+import net.pasterdream.event.BluePrintLoader;
 import net.pasterdream.init.PasterdreamModMenus;
 
 import net.minecraftforge.items.SlotItemHandler;
@@ -20,408 +32,112 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
+import net.pasterdream.item.BlueprintItem;
 
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.Map;
 import java.util.HashMap;
 
-public class BlueprintGui0Menu extends AbstractContainerMenu implements Supplier<Map<Integer, Slot>> {
-	public final static HashMap<String, Object> guistate = new HashMap<>();
+public class BlueprintGui0Menu extends AbstractContainerMenu {
+	public final HashMap<String, Object> guistate = new HashMap<>();
 	public final Level world;
 	public final Player entity;
 	public int x, y, z;
 	private ContainerLevelAccess access = ContainerLevelAccess.NULL;
 	private IItemHandler internal;
 	private final Map<Integer, Slot> customSlots = new HashMap<>();
-	private boolean bound = false;
-	private Supplier<Boolean> boundItemMatcher = null;
-	private Entity boundEntity = null;
-	private BlockEntity boundBlockEntity = null;
-
+    private BluePrintLoader.BluePrint bluePrint = null;
+    private InteractionHand hand;
 	public BlueprintGui0Menu(int id, Inventory inv, FriendlyByteBuf extraData) {
 		super(PasterdreamModMenus.BLUEPRINT_GUI_0.get(), id);
 		this.entity = inv.player;
 		this.world = inv.player.level();
 		this.internal = new ItemStackHandler(25);
-		BlockPos pos = null;
-		if (extraData != null) {
+        if (extraData != null) {
+            bluePrint = BluePrintLoader.get(extraData.readResourceLocation());
+        }
+		BlockPos pos;
+        if (extraData != null) {
 			pos = extraData.readBlockPos();
 			this.x = pos.getX();
 			this.y = pos.getY();
 			this.z = pos.getZ();
 			access = ContainerLevelAccess.create(world, pos);
 		}
-		if (pos != null) {
-			if (extraData.readableBytes() == 1) { // bound to item
-				byte hand = extraData.readByte();
-				ItemStack itemstack = hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem();
-				this.boundItemMatcher = () -> itemstack == (hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem());
-				itemstack.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-					this.internal = capability;
-					this.bound = true;
-				});
-			} else if (extraData.readableBytes() > 1) { // bound to entity
-				extraData.readByte(); // drop padding
-				boundEntity = world.getEntity(extraData.readVarInt());
-				if (boundEntity != null)
-					boundEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-			} else { // might be bound to block
-				boundBlockEntity = this.world.getBlockEntity(pos);
-				if (boundBlockEntity != null)
-					boundBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-			}
-		}
-		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 53, 24) {
-			private final int slot = 0;
+        for(int i = 0; i < 25; ++i)
+        {
+            int x = i % 5;
+            int y = i / 5;
+            this.customSlots.put(i, this.addSlot(new SlotItemHandler(internal, i, 53 + 18 * x, 24 + 18 * y) {
+                @Override
+                public boolean mayPickup(Player entity) {
+                    return false;
+                }
 
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 71, 24) {
-			private final int slot = 1;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 89, 24) {
-			private final int slot = 2;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(3, this.addSlot(new SlotItemHandler(internal, 3, 107, 24) {
-			private final int slot = 3;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(4, this.addSlot(new SlotItemHandler(internal, 4, 125, 24) {
-			private final int slot = 4;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(5, this.addSlot(new SlotItemHandler(internal, 5, 53, 42) {
-			private final int slot = 5;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(6, this.addSlot(new SlotItemHandler(internal, 6, 71, 42) {
-			private final int slot = 6;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(7, this.addSlot(new SlotItemHandler(internal, 7, 89, 42) {
-			private final int slot = 7;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(8, this.addSlot(new SlotItemHandler(internal, 8, 107, 42) {
-			private final int slot = 8;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(9, this.addSlot(new SlotItemHandler(internal, 9, 125, 42) {
-			private final int slot = 9;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(10, this.addSlot(new SlotItemHandler(internal, 10, 53, 60) {
-			private final int slot = 10;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(11, this.addSlot(new SlotItemHandler(internal, 11, 71, 60) {
-			private final int slot = 11;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(12, this.addSlot(new SlotItemHandler(internal, 12, 89, 60) {
-			private final int slot = 12;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(13, this.addSlot(new SlotItemHandler(internal, 13, 107, 60) {
-			private final int slot = 13;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(14, this.addSlot(new SlotItemHandler(internal, 14, 125, 60) {
-			private final int slot = 14;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(15, this.addSlot(new SlotItemHandler(internal, 15, 53, 78) {
-			private final int slot = 15;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(16, this.addSlot(new SlotItemHandler(internal, 16, 71, 78) {
-			private final int slot = 16;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(17, this.addSlot(new SlotItemHandler(internal, 17, 89, 78) {
-			private final int slot = 17;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(18, this.addSlot(new SlotItemHandler(internal, 18, 107, 78) {
-			private final int slot = 18;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(19, this.addSlot(new SlotItemHandler(internal, 19, 125, 78) {
-			private final int slot = 19;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(20, this.addSlot(new SlotItemHandler(internal, 20, 53, 96) {
-			private final int slot = 20;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(21, this.addSlot(new SlotItemHandler(internal, 21, 71, 96) {
-			private final int slot = 21;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(22, this.addSlot(new SlotItemHandler(internal, 22, 89, 96) {
-			private final int slot = 22;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(23, this.addSlot(new SlotItemHandler(internal, 23, 107, 96) {
-			private final int slot = 23;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
-		this.customSlots.put(24, this.addSlot(new SlotItemHandler(internal, 24, 125, 96) {
-			private final int slot = 24;
-
-			@Override
-			public boolean mayPickup(Player entity) {
-				return false;
-			}
-
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return false;
-			}
-		}));
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return false;
+                }
+            }));
+        }
+        if (extraData != null) {
+            boolean ismainhand = extraData.readBoolean();
+            hand = ismainhand?InteractionHand.MAIN_HAND:InteractionHand.OFF_HAND;
+        }
+        refreshSlot(entity,0);
 		for (int si = 0; si < 3; ++si)
 			for (int sj = 0; sj < 9; ++sj)
-				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 10 + 8 + sj * 18, 50 + 84 + si * 18));
-		for (int si = 0; si < 9; ++si)
-			this.addSlot(new Slot(inv, si, 10 + 8 + si * 18, 50 + 142));
-	}
+				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 10 + 8 + sj * 18, 50 + 84 + si * 18){
+                    @Override
+                    public boolean mayPickup(Player entity) {
+                        return hand == InteractionHand.MAIN_HAND?this.getContainerSlot() != inv.selected:super.mayPickup(entity);
+                    }
 
+                    @Override
+                    public boolean mayPlace(ItemStack stack) {
+                        return hand == InteractionHand.MAIN_HAND?this.getContainerSlot() != inv.selected:super.mayPlace(stack);
+                    }
+                });
+		for (int si = 0; si < 9; ++si)
+			this.addSlot(new Slot(inv, si, 10 + 8 + si * 18, 50 + 142){
+                @Override
+                public boolean mayPickup(Player entity) {
+                    return hand == InteractionHand.MAIN_HAND?this.getContainerSlot() != inv.selected:super.mayPickup(entity);
+                }
+
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return hand == InteractionHand.MAIN_HAND?this.getContainerSlot() != inv.selected:super.mayPlace(stack);
+                }
+            });
+	}
+    public BluePrintLoader.BluePrint getBluePrint()
+    {
+        return this.bluePrint;
+    }
+    public void refreshSlot(Player pl, int index)
+    {
+        List<Item> itemList = bluePrint.get(index);
+        for (int i = 0 ;i < 25; ++i)
+        {
+            ItemStack setstack = new ItemStack(itemList.get(i));
+            setstack.setCount(1);
+            this.customSlots.get(i).set(setstack);
+            pl.containerMenu.broadcastChanges();
+        }
+    }
 	@Override
 	public boolean stillValid(Player player) {
-		if (this.bound) {
-			if (this.boundItemMatcher != null)
-				return this.boundItemMatcher.get();
-			else if (this.boundBlockEntity != null)
-				return AbstractContainerMenu.stillValid(this.access, player, this.boundBlockEntity.getBlockState().getBlock());
-			else if (this.boundEntity != null)
-				return this.boundEntity.isAlive();
-		}
-		return true;
+		return entity.isAlive();
 	}
-
+    @Override
+    public void clicked(int slot, int button, ClickType clickType, Player player) {
+        if(!(hand == InteractionHand.OFF_HAND && clickType == ClickType.SWAP))
+        {
+            super.clicked(slot,button,clickType,player);
+        }
+    }
 	@Override
 	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
@@ -454,99 +170,4 @@ public class BlueprintGui0Menu extends AbstractContainerMenu implements Supplier
 		return itemstack;
 	}
 
-	@Override
-	protected boolean moveItemStackTo(ItemStack p_38904_, int p_38905_, int p_38906_, boolean p_38907_) {
-		boolean flag = false;
-		int i = p_38905_;
-		if (p_38907_) {
-			i = p_38906_ - 1;
-		}
-		if (p_38904_.isStackable()) {
-			while (!p_38904_.isEmpty()) {
-				if (p_38907_) {
-					if (i < p_38905_) {
-						break;
-					}
-				} else if (i >= p_38906_) {
-					break;
-				}
-				Slot slot = this.slots.get(i);
-				ItemStack itemstack = slot.getItem();
-				if (slot.mayPlace(itemstack) && !itemstack.isEmpty() && ItemStack.isSameItemSameTags(p_38904_, itemstack)) {
-					int j = itemstack.getCount() + p_38904_.getCount();
-					int maxSize = Math.min(slot.getMaxStackSize(), p_38904_.getMaxStackSize());
-					if (j <= maxSize) {
-						p_38904_.setCount(0);
-						itemstack.setCount(j);
-						slot.set(itemstack);
-						flag = true;
-					} else if (itemstack.getCount() < maxSize) {
-						p_38904_.shrink(maxSize - itemstack.getCount());
-						itemstack.setCount(maxSize);
-						slot.set(itemstack);
-						flag = true;
-					}
-				}
-				if (p_38907_) {
-					--i;
-				} else {
-					++i;
-				}
-			}
-		}
-		if (!p_38904_.isEmpty()) {
-			if (p_38907_) {
-				i = p_38906_ - 1;
-			} else {
-				i = p_38905_;
-			}
-			while (true) {
-				if (p_38907_) {
-					if (i < p_38905_) {
-						break;
-					}
-				} else if (i >= p_38906_) {
-					break;
-				}
-				Slot slot1 = this.slots.get(i);
-				ItemStack itemstack1 = slot1.getItem();
-				if (itemstack1.isEmpty() && slot1.mayPlace(p_38904_)) {
-					if (p_38904_.getCount() > slot1.getMaxStackSize()) {
-						slot1.setByPlayer(p_38904_.split(slot1.getMaxStackSize()));
-					} else {
-						slot1.setByPlayer(p_38904_.split(p_38904_.getCount()));
-					}
-					slot1.setChanged();
-					flag = true;
-					break;
-				}
-				if (p_38907_) {
-					--i;
-				} else {
-					++i;
-				}
-			}
-		}
-		return flag;
-	}
-
-	@Override
-	public void removed(Player playerIn) {
-		super.removed(playerIn);
-		if (!bound && playerIn instanceof ServerPlayer serverPlayer) {
-			if (!serverPlayer.isAlive() || serverPlayer.hasDisconnected()) {
-				for (int j = 0; j < internal.getSlots(); ++j) {
-					playerIn.drop(internal.extractItem(j, internal.getStackInSlot(j).getCount(), false), false);
-				}
-			} else {
-				for (int i = 0; i < internal.getSlots(); ++i) {
-					playerIn.getInventory().placeItemBackInInventory(internal.extractItem(i, internal.getStackInSlot(i).getCount(), false));
-				}
-			}
-		}
-	}
-
-	public Map<Integer, Slot> get() {
-		return customSlots;
-	}
 }

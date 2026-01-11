@@ -27,7 +27,7 @@ public class FurySpellPr0Procedure {
 			} 
 		}
 		if (world instanceof ServerLevel _level) {
-			Entity entityToSpawn = PasterdreamModEntities.FURY_SPELL_ENTITY.get().spawn(_level, BlockPos.containing(x - 1, y + 1, z - 1), MobSpawnType.MOB_SUMMONED);
+			Entity entityToSpawn = PasterdreamModEntities.FURY_SPELL_ENTITY.get().spawn(_level, BlockPos.containing(x, y + 1, z), MobSpawnType.MOB_SUMMONED);
 			if (entityToSpawn != null) {
 				entityToSpawn.setYRot(world.getRandom().nextFloat() * 360F);
 			}

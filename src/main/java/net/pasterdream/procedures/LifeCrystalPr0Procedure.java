@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.pasterdream.init.PasterdreamModParticleTypes;
 import net.pasterdream.init.PasterdreamModBlocks;
 import net.pasterdream.PasterdreamMod;
@@ -29,8 +30,9 @@ public class LifeCrystalPr0Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH)
-				.hasModifier((new AttributeModifier(UUID.fromString("4619a21e-8140-4f6b-a384-5a3e83b65e3c"), "life_crystal", 2, AttributeModifier.Operation.ADDITION)))) {
+		AttributeInstance instance = ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH);
+		if (instance!=null &&
+				instance.hasModifier((new AttributeModifier(UUID.fromString("4619a21e-8140-4f6b-a384-5a3e83b65e3c"), "life_crystal", 2, AttributeModifier.Operation.ADDITION)))) {
 			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(Component.literal("\u4F60\u5DF2\u7ECF\u5438\u6536\u8FC7\u751F\u547D\u6C34\u6676\u4E86\uFF01"), false);
 		} else {

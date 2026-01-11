@@ -1,6 +1,8 @@
 
 package net.pasterdream.entity;
 
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraftforge.fluids.FluidType;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.core.animation.RawAnimation;
@@ -17,21 +19,10 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
 
 import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.projectile.ThrownPotion;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -39,7 +30,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
 
-public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
+public class FurySpellEntityEntity extends Entity implements GeoEntity {
 	public static final EntityDataAccessor<Boolean> SHOOT = SynchedEntityData.defineId(FurySpellEntityEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<String> ANIMATION = SynchedEntityData.defineId(FurySpellEntityEntity.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<String> TEXTURE = SynchedEntityData.defineId(FurySpellEntityEntity.class, EntityDataSerializers.STRING);
@@ -51,22 +42,22 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 
 	public FurySpellEntityEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(PasterdreamModEntities.FURY_SPELL_ENTITY.get(), world);
+        this.setNoGravity(true);
+        this.setInvulnerable(true);
 	}
 
 	public FurySpellEntityEntity(EntityType<FurySpellEntityEntity> type, Level world) {
 		super(type, world);
-		xpReward = 0;
-		setNoAi(true);
-	}
+        this.setNoGravity(true);
+        this.setInvulnerable(true);
+    }
 
 	@Override
 	protected void defineSynchedData() {
-		super.defineSynchedData();
 		this.entityData.define(SHOOT, false);
 		this.entityData.define(ANIMATION, "undefined");
 		this.entityData.define(TEXTURE, "fury_spell_entity");
 	}
-
 	public void setTexture(String texture) {
 		this.entityData.set(TEXTURE, texture);
 	}
@@ -81,52 +72,12 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 	}
 
 	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
-
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (source.is(DamageTypes.IN_FIRE))
-			return false;
-		if (source.getDirectEntity() instanceof AbstractArrow)
-			return false;
-		if (source.getDirectEntity() instanceof Player)
-			return false;
-		if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
-			return false;
-		if (source.is(DamageTypes.FALL))
-			return false;
-		if (source.is(DamageTypes.CACTUS))
-			return false;
-		if (source.is(DamageTypes.DROWN))
-			return false;
-		if (source.is(DamageTypes.LIGHTNING_BOLT))
-			return false;
-		if (source.is(DamageTypes.EXPLOSION))
-			return false;
-		if (source.is(DamageTypes.TRIDENT))
-			return false;
-		if (source.is(DamageTypes.FALLING_ANVIL))
-			return false;
-		if (source.is(DamageTypes.DRAGON_BREATH))
-			return false;
-		if (source.is(DamageTypes.WITHER))
-			return false;
-		if (source.is(DamageTypes.WITHER_SKULL))
-			return false;
-		return super.hurt(source, amount);
-	}
-
-	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
 		compound.putString("Texture", this.getTexture());
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
 		if (compound.contains("Texture"))
 			this.setTexture(compound.getString("Texture"));
 	}
@@ -134,6 +85,11 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
+        String animation = this.getSyncedAnimation();
+        if (!this.getSyncedAnimation().equals("undefined")) {
+            this.setAnimation("undefined");
+            this.animationprocedure = animation;
+        }
 		FurySpellEntityPr0Procedure.execute(this);
 		this.refreshDimensions();
 	}
@@ -148,31 +104,7 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 		return false;
 	}
 
-	@Override
-	protected void doPush(Entity entityIn) {
-	}
-
-	@Override
-	protected void pushEntities() {
-	}
-
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		this.updateSwingTime();
-	}
-
 	public static void init() {
-	}
-
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 1);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
 	}
 
 	private PlayState movementPredicate(AnimationState event) {
@@ -195,15 +127,6 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 		return PlayState.CONTINUE;
 	}
 
-	@Override
-	protected void tickDeath() {
-		++this.deathTime;
-		if (this.deathTime == 1) {
-			this.remove(FurySpellEntityEntity.RemovalReason.KILLED);
-			this.dropExperience();
-		}
-	}
-
 	public String getSyncedAnimation() {
 		return this.entityData.get(ANIMATION);
 	}
@@ -222,4 +145,15 @@ public class FurySpellEntityEntity extends PathfinderMob implements GeoEntity {
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
 		return this.cache;
 	}
+
+    @Override
+    public PushReaction getPistonPushReaction() {
+        return PushReaction.IGNORE;
+    }
+
+    @Override
+    public boolean isPushedByFluid(FluidType type)
+    {
+        return false;
+    }
 }

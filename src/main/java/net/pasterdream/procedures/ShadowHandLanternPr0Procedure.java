@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.item.ShadowHandLanternItem;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModAttributes;
@@ -53,8 +54,8 @@ public class ShadowHandLanternPr0Procedure {
 				}
 			}
 		}
-		if (entity instanceof LivingEntity && ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()) != null) {
-			((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 1));
+		if (entity instanceof Player pl) {
+            SanCapability.addPlayerSanWithCheck(pl,-1);
 		}
 	}
 }

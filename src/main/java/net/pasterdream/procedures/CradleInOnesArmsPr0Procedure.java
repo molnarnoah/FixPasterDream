@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.init.PasterdreamModEntities;
 import net.pasterdream.init.PasterdreamModAttributes;
 
@@ -25,16 +27,15 @@ public class CradleInOnesArmsPr0Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity instanceof Player) {
-			if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 5) {
+		if (entity instanceof Player pl) {
+            if (MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(pl,5)) {
 				if (world instanceof ServerLevel _level) {
 					Entity entityToSpawn = PasterdreamModEntities.FOX_FIRE.get().spawn(_level, BlockPos.containing(x, y + 1, z), MobSpawnType.MOB_SUMMONED);
 					if (entityToSpawn != null) {
 						entityToSpawn.setDeltaMovement(0, 0, 0);
 					}
 				}
-				if (entity instanceof LivingEntity _entity)
-					_entity.swing(InteractionHand.MAIN_HAND, true);
+                pl.swing(InteractionHand.MAIN_HAND, true);
 				{
 					AtomicReference<IItemHandler> _iitemhandlerref = new AtomicReference<>();
 					entity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(_iitemhandlerref::set);
@@ -48,9 +49,8 @@ public class CradleInOnesArmsPr0Procedure {
 						}
 					}
 				}
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 5));
 			} else {
-				if (entity instanceof Player _player && !_player.level().isClientSide())
+				if (entity instanceof Player _player && _player.level().isClientSide())
 					_player.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
 			}
 		}

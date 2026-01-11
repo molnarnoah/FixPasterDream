@@ -70,8 +70,9 @@ public class FurySpellProjectileEntity extends AbstractArrow implements ItemSupp
 	@Override
 	public void onHitEntity(EntityHitResult entityHitResult) {
 		super.onHitEntity(entityHitResult);
-		FurySpellPr0Procedure.execute(this.level(), this.getX(), this.getY(), this.getZ());
-	}
+        FurySpellPr0Procedure.execute(this.level(), this.getX(), this.getY(), this.getZ());
+        this.discard();
+    }
 
 	@Override
 	public void onHitBlock(BlockHitResult blockHitResult) {

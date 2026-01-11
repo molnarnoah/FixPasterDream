@@ -98,7 +98,7 @@ public class MeltdreamChestPr3Procedure {
 					_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 							"data merge block ~ ~ ~ {LootTable:\"pasterdream:loots_meltdream_chest_1\"}");
 			}
-			MeltdreamChestLootsPr1Procedure.execute(world, x, y, z);
+			//MeltdreamChestLootsPr1Procedure.execute(world, x, y, z);
 			MeltdreamChestPr4Procedure.execute(world, x, y, z);
 			if (world instanceof ServerLevel _level)
 				_level.sendParticles((SimpleParticleType) (PasterdreamModParticleTypes.MELTDREAM_CRYSTAL_BIG_PARTICLE.get()), (x + 0.5), (y + 0.5), (z + 0.5), 64, 0.8, 0.5, 0.8, 1);

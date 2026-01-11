@@ -54,7 +54,12 @@ public class VillageBuildingHelper {
         List<Pair<StructurePoolElement, Integer>> listOfPieceEntries = new ArrayList<>(rawTemplates);
         listOfPieceEntries.add(new Pair<>(element, weight));
 
-        rawTemplates.clear();
-        rawTemplates.addAll(listOfPieceEntries);
+        try {
+            rawTemplates.clear();
+            rawTemplates.addAll(listOfPieceEntries);
+        }catch (Exception ignore){
+
+        }
+
     }
 }

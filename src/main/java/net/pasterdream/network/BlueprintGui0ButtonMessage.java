@@ -1,9 +1,10 @@
 
 package net.pasterdream.network;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.pasterdream.world.inventory.BlueprintGui0Menu;
-import net.pasterdream.procedures.BlueprintGui0Pr2Procedure;
-import net.pasterdream.procedures.BlueprintGui0Pr1Procedure;
 import net.pasterdream.PasterdreamMod;
 
 import net.minecraftforge.network.NetworkEvent;
@@ -21,24 +22,24 @@ import java.util.HashMap;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlueprintGui0ButtonMessage {
-	private final int buttonID, x, y, z;
+	private final int now_page, x, y, z;
 
 	public BlueprintGui0ButtonMessage(FriendlyByteBuf buffer) {
-		this.buttonID = buffer.readInt();
+		this.now_page = buffer.readInt();
 		this.x = buffer.readInt();
 		this.y = buffer.readInt();
 		this.z = buffer.readInt();
 	}
 
-	public BlueprintGui0ButtonMessage(int buttonID, int x, int y, int z) {
-		this.buttonID = buttonID;
+	public BlueprintGui0ButtonMessage(int now_page, int x, int y, int z) {
+		this.now_page = now_page;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
 	public static void buffer(BlueprintGui0ButtonMessage message, FriendlyByteBuf buffer) {
-		buffer.writeInt(message.buttonID);
+		buffer.writeInt(message.now_page);
 		buffer.writeInt(message.x);
 		buffer.writeInt(message.y);
 		buffer.writeInt(message.z);
@@ -48,29 +49,31 @@ public class BlueprintGui0ButtonMessage {
 		NetworkEvent.Context context = contextSupplier.get();
 		context.enqueueWork(() -> {
 			Player entity = context.getSender();
-			int buttonID = message.buttonID;
+			int now_page = message.now_page;
 			int x = message.x;
 			int y = message.y;
 			int z = message.z;
-			handleButtonAction(entity, buttonID, x, y, z);
+            handleButtonAction(entity, now_page, x, y, z);
 		});
 		context.setPacketHandled(true);
 	}
 
-	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
+	public static void handleButtonAction(Player entity, int now_page, int x, int y, int z) {
 		Level world = entity.level();
-		HashMap guistate = BlueprintGui0Menu.guistate;
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(new BlockPos(x, y, z)))
-			return;
-		if (buttonID == 0) {
+        if (!world.hasChunkAt(new BlockPos(x, y, z)))
+            return;
+        if(entity.containerMenu instanceof BlueprintGui0Menu bp)
+        {
+            HashMap<String, Object> guistate = bp.guistate;
+            // security measure to prevent arbitrary chunk generation
+            if (!world.isClientSide()) {
+                world.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.book.page_turn")), SoundSource.NEUTRAL, 1, 1);
+            } else {
+                world.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.book.page_turn")), SoundSource.NEUTRAL, 1, 1, false);
+            }
+            bp.refreshSlot(entity,now_page - 1);
+        }
 
-			BlueprintGui0Pr1Procedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 1) {
-
-			BlueprintGui0Pr2Procedure.execute(world, x, y, z, entity);
-		}
 	}
 
 	@SubscribeEvent

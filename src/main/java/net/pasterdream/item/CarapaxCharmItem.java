@@ -1,10 +1,14 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -29,7 +33,7 @@ public class CarapaxCharmItem extends Item implements ICurioItem {
 	}
 
 	public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("2c5819a9-794c-4b46-803e-966ae56c55c9");
-	public static final AttributeModifier modifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "generic.movementSpeed", -0.008F, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier modifier = new AttributeModifier(MOVEMENT_SPEED_UUID, "generic.movementSpeed", -0.08F, AttributeModifier.Operation.MULTIPLY_BASE);
 	public static final UUID ARMOR_UUID = UUID.fromString("9d414944-d593-4e51-b772-cfe163f26f17");
 	public static final AttributeModifier modifier0 = new AttributeModifier(ARMOR_UUID, "generic.armor", 2.0F, AttributeModifier.Operation.ADDITION);
 	public static final UUID ARMOR_TOUGHNESS_UUID = UUID.fromString("73ad191c-4d7e-4852-9016-7d33e523e3f5");
@@ -39,45 +43,25 @@ public class CarapaxCharmItem extends Item implements ICurioItem {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(Component.literal("\u54C1\u8D28\uFF1A\u00A7a\u4F18\u79C0 \u2605\u2605"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u62A4\u7532\u503C+2"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u76D4\u7532\u97E7\u6027+1"));
-		list.add(Component.literal("\u00A77\u25AA \u00A74\u79FB\u52A8\u901F\u5EA6-8%"));
 	}
 
-	@Override
-	public boolean canEquip(SlotContext context, ItemStack itemStack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ARMOR);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ARMOR_TOUGHNESS);
-			return instance.getModifier(modifier.getId()) == null 
-			&& instance0.getModifier(modifier0.getId()) == null
-			&& instance1.getModifier(modifier1.getId()) == null;
-		}
-		return false;
-	}
-
-	@Override
-	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ARMOR);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ARMOR_TOUGHNESS);
-			if (instance.getModifier(modifier.getId()) == null) instance.addPermanentModifier(modifier);
-			if (instance0.getModifier(modifier0.getId()) == null) instance0.addPermanentModifier(modifier0);
-			if (instance1.getModifier(modifier1.getId()) == null) instance1.addPermanentModifier(modifier1);
-		}
-	}
-
-	@Override
-	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MOVEMENT_SPEED);
-			AttributeInstance instance0 = player.getAttribute(Attributes.ARMOR);
-			AttributeInstance instance1 = player.getAttribute(Attributes.ARMOR_TOUGHNESS);
-			instance.removeModifier(modifier.getId());
-			instance0.removeModifier(modifier0.getId());
-			instance1.removeModifier(modifier1.getId());
-		}
-	}
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        if(slotContext.entity() != null)
+        {
+            return CuriosApi.getCuriosInventory(slotContext.entity()).map(handler ->
+                            handler.findFirstCurio(stack.getItem()).isEmpty())
+                    .orElse(true);
+        }
+        return true;
+    }
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext,
+                                                                        UUID uuid, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+        attributeModifiers.put(Attributes.MOVEMENT_SPEED, modifier);
+        attributeModifiers.put(Attributes.ARMOR, modifier0);
+        attributeModifiers.put(Attributes.ARMOR_TOUGHNESS, modifier1);
+        return attributeModifiers;
+    }
 }

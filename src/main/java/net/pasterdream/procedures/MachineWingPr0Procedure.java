@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import software.bernie.geckolib.animatable.GeoItem;
 
 import net.pasterdream.item.MachineWingItem;
@@ -20,28 +21,26 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.core.registries.Registries;
 
 public class MachineWingPr0Procedure {
-	public static void execute(Entity entity, ItemStack itemstack) {
+	public static void execute(Player entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
 		if (PasterdreamConfigCommonConfiguration.BAN_ALL_THE_WINGS.get() == true) {
-			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("\u00A74\u6B64\u7269\u54C1\u5DF2\u88AB\u7981\u7528"), true);
+			if (entity.level().isClientSide())
+                entity.displayClientMessage(Component.literal("\u00A74\u6B64\u7269\u54C1\u5DF2\u88AB\u7981\u7528"), true);
 		} else {
-			if (entity instanceof Player) {
-				if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.001
-						&& (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY).getItem() == PasterdreamModItems.MACHINE_WING_CHESTPLATE.get()) {
-					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-						_entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.MACHINE_WING_EFFECT.get(), 2, 0, false, false));
-				}
-				if (!entity.onGround()) {
-					((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.001));
-					if (itemstack.getItem() instanceof MachineWingItem armor && armor instanceof GeoItem)
-						itemstack.getOrCreateTag().putString("geckoAnim", "fly");
-					if ((entity.level().dimension()) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:aaroncos_arena_world")))) {
-						((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.049));
-					}
-				}
-			}
+            boolean flag = (entity.level().dimension()) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:aaroncos_arena_world")));
+            if(entity.tickCount % 20 == 0)
+            {
+                if(entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == PasterdreamModItems.MACHINE_WING_CHESTPLATE.get() && MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(entity,0.02*(flag?50:1)))
+                {
+                    if (!entity.level().isClientSide())
+                        entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.MACHINE_WING_EFFECT.get(), 22, 0, false, false));
+                }
+            }
+            if (!entity.onGround()) {
+                if (itemstack.getItem() instanceof MachineWingItem)
+                    itemstack.getOrCreateTag().putString("geckoAnim", "fly");
+            }
 		}
 	}
 }
