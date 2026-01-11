@@ -4,351 +4,22 @@
  */
 package net.pasterdream.init;
 
-import net.pasterdream.item.YinhulCottonCandyItem;
-import net.pasterdream.item.YeastItem;
-import net.pasterdream.item.WorldtreeSeedpodItem;
-import net.pasterdream.item.WindrunnerCrystalItem;
-import net.pasterdream.item.WindVaneItem;
-import net.pasterdream.item.WindPlantExtractItem;
-import net.pasterdream.item.WindKnightFlagItem;
-import net.pasterdream.item.WindJourneyDiscItem;
-import net.pasterdream.item.WindIronIngotItem;
-import net.pasterdream.item.WhiteSwordRainItem;
-import net.pasterdream.item.WhiteSwordItem;
-import net.pasterdream.item.WhiteSwordEmbryoItem;
-import net.pasterdream.item.WhiteFlowerBodyItem;
-import net.pasterdream.item.WhiteCrystalItem;
-import net.pasterdream.item.WhiteCorollaItem;
-import net.pasterdream.item.WatermelonJuiceItem;
-import net.pasterdream.item.WaterGlassjarItem;
-import net.pasterdream.item.WaferBiscuitItem;
-import net.pasterdream.item.Unknownnotes0Item;
-import net.pasterdream.item.TurnbackCloakItem;
-import net.pasterdream.item.TurnPaleCeciliaItem;
-import net.pasterdream.item.TruestMoltengoldWandItem;
-import net.pasterdream.item.TruestMoltengoldSwordItem;
-import net.pasterdream.item.TrueTideSwordItem;
-import net.pasterdream.item.TrueMoltengoldWandItem;
-import net.pasterdream.item.TrueMoltengoldSwordItem;
-import net.pasterdream.item.TrueMoltengoldPickaxeItem;
-import net.pasterdream.item.TrueGrassSwordItem;
-import net.pasterdream.item.TrueDesertSwordItem;
-import net.pasterdream.item.TravelerBeltItem;
-import net.pasterdream.item.TitaniumUpgradeItem;
-import net.pasterdream.item.TitaniumSwordItem;
-import net.pasterdream.item.TitaniumShovelItem;
-import net.pasterdream.item.TitaniumPickaxeItem;
-import net.pasterdream.item.TitaniumNuggetItem;
-import net.pasterdream.item.TitaniumIngotItem;
-import net.pasterdream.item.TitaniumHoeItem;
-import net.pasterdream.item.TitaniumAxeItem;
-import net.pasterdream.item.TitaniumArmorItem;
-import net.pasterdream.item.TimeHourglassItem;
-import net.pasterdream.item.TideSwordItem;
-import net.pasterdream.item.ThermalDaggerItem;
-import net.pasterdream.item.TerraswordEmbryoItem;
-import net.pasterdream.item.TerraSwordItem;
-import net.pasterdream.item.TerraCharmItem;
-import net.pasterdream.item.TalentShadowItem;
-import net.pasterdream.item.TalentLightItem;
-import net.pasterdream.item.Tabitem2Item;
-import net.pasterdream.item.Tabitem1Item;
-import net.pasterdream.item.SwordEmbryo0Item;
-import net.pasterdream.item.SwissRollItem;
-import net.pasterdream.item.SweetdreamDiscItem;
-import net.pasterdream.item.StuffedWaferCookiesItem;
-import net.pasterdream.item.StrawberryHeartItem;
-import net.pasterdream.item.StorageBagItem;
-import net.pasterdream.item.StorageBag0Item;
-import net.pasterdream.item.StarWishRodItem;
-import net.pasterdream.item.StarWishRodEmbryoItem;
-import net.pasterdream.item.SquealWaveWandItem;
-import net.pasterdream.item.SquealWaveItem;
-import net.pasterdream.item.SpoolItem;
-import net.pasterdream.item.SoulEssenceItem;
-import net.pasterdream.item.SoulDustItem;
-import net.pasterdream.item.SorbentItem;
-import net.pasterdream.item.SnowfalldreamDiscItem;
-import net.pasterdream.item.SnowVowHeadItem;
-import net.pasterdream.item.SilverBellItem;
-import net.pasterdream.item.ShadowVortexItemItem;
-import net.pasterdream.item.ShadowVortexBookItem;
-import net.pasterdream.item.ShadowSwordItem;
-import net.pasterdream.item.ShadowSwordEmbryoItem;
-import net.pasterdream.item.ShadowLiquidItem;
-import net.pasterdream.item.ShadowHiltItem;
-import net.pasterdream.item.ShadowHandLanternItem;
-import net.pasterdream.item.ShadowErosionSwordItem;
-import net.pasterdream.item.ShadowErosionSwordEmbryoItem;
-import net.pasterdream.item.ShadowErosionShovelItem;
-import net.pasterdream.item.ShadowErosionShovelEmbryoItem;
-import net.pasterdream.item.ShadowErosionPickaxeItem;
-import net.pasterdream.item.ShadowErosionPickaxeEmbryoItem;
-import net.pasterdream.item.ShadowErosionHoeItem;
-import net.pasterdream.item.ShadowErosionHoeEmbryoItem;
-import net.pasterdream.item.ShadowErosionAxeItem;
-import net.pasterdream.item.ShadowErosionAxeEmbryoItem;
-import net.pasterdream.item.ShadowDungeonKeyItem;
-import net.pasterdream.item.ShadowBreathItem;
-import net.pasterdream.item.SeaCharmItem;
-import net.pasterdream.item.SculkUpgradeItem;
-import net.pasterdream.item.SculkHeartItem;
-import net.pasterdream.item.SculkArmorItem;
-import net.pasterdream.item.Sandwich0Item;
-import net.pasterdream.item.SaltItem;
-import net.pasterdream.item.RyeseedItem;
-import net.pasterdream.item.RustBlackMetalGrainItem;
-import net.pasterdream.item.RootsPaleBoneneedleItem;
-import net.pasterdream.item.RicecakeItem;
-import net.pasterdream.item.ReedrodItem;
-import net.pasterdream.item.RedDew3RingItem;
-import net.pasterdream.item.RedDew2RingItem;
-import net.pasterdream.item.RedDew1RingItem;
-import net.pasterdream.item.RedDew0RingItem;
-import net.pasterdream.item.RedDew0Item;
-import net.pasterdream.item.RawTitaniumItem;
-import net.pasterdream.item.RawMoltengoldItem;
-import net.pasterdream.item.RageElixir0Item;
-import net.pasterdream.item.Rabbit0NecklaceItem;
-import net.pasterdream.item.QymHeadItem;
-import net.pasterdream.item.QymArmorItem;
-import net.pasterdream.item.QueerSoupItem;
-import net.pasterdream.item.PureHorrorItem;
-import net.pasterdream.item.PulseWindrunnerCrystalItem;
-import net.pasterdream.item.ProtectDeckItem;
-import net.pasterdream.item.PoppingCandyItem;
-import net.pasterdream.item.PoisonSpellItem;
-import net.pasterdream.item.PliersItem;
-import net.pasterdream.item.PinkeggItem;
-import net.pasterdream.item.PinkSlimeballItem;
-import net.pasterdream.item.PineappleLoveSeaItem;
-import net.pasterdream.item.PergamynItem;
-import net.pasterdream.item.PenAndInkItem;
-import net.pasterdream.item.PasterBlockResetToolItem;
-import net.pasterdream.item.PaperPlaneItem;
-import net.pasterdream.item.PaleBoneneedleItem;
-import net.pasterdream.item.OddBaconeEggItem;
-import net.pasterdream.item.NightmareFuelItem;
-import net.pasterdream.item.NatureBeltItem;
-import net.pasterdream.item.MossPhantomMembraneItem;
-import net.pasterdream.item.MortarItem;
-import net.pasterdream.item.MoltengoldWandItem;
-import net.pasterdream.item.MoltengoldSwordItem;
-import net.pasterdream.item.MoltengoldShovelItem;
-import net.pasterdream.item.MoltengoldPickaxeItem;
-import net.pasterdream.item.MoltengoldNuggetItem;
-import net.pasterdream.item.MoltengoldIngotItem;
-import net.pasterdream.item.MoltengoldHoeItem;
-import net.pasterdream.item.MoltengoldDustItem;
-import net.pasterdream.item.MoltengoldAxeItem;
-import net.pasterdream.item.MilkGlassjarItem;
-import net.pasterdream.item.MemoryGem0Item;
-import net.pasterdream.item.MementoItem10Item;
-import net.pasterdream.item.MementoItem09Item;
-import net.pasterdream.item.MementoItem08Item;
-import net.pasterdream.item.MementoItem07Item;
-import net.pasterdream.item.MementoItem06Item;
-import net.pasterdream.item.MementoItem05Item;
-import net.pasterdream.item.MementoItem04Item;
-import net.pasterdream.item.MementoItem03Item;
-import net.pasterdream.item.MementoItem02Item;
-import net.pasterdream.item.MementoItem01Item;
-import net.pasterdream.item.MeltdreamShovelItem;
-import net.pasterdream.item.MeltdreamPickaxeItem;
-import net.pasterdream.item.MeltdreamLiquidItem;
-import net.pasterdream.item.MeltdreamHoeItem;
-import net.pasterdream.item.MeltdreamEnergy0RingItem;
-import net.pasterdream.item.MeltdreamElixirBottleItem;
-import net.pasterdream.item.MeltdreamCrystal0Item;
-import net.pasterdream.item.MeltdreamAxeItem;
-import net.pasterdream.item.ManadustItem;
-import net.pasterdream.item.ManaWandItem;
-import net.pasterdream.item.MagicStoneItem;
-import net.pasterdream.item.MachineWingItem;
-import net.pasterdream.item.LootstableCreate9Item;
-import net.pasterdream.item.LootstableCreate8Item;
-import net.pasterdream.item.LootstableCreate7Item;
-import net.pasterdream.item.LootstableCreate6Item;
-import net.pasterdream.item.LootstableCreate5Item;
-import net.pasterdream.item.LootstableCreate4Item;
-import net.pasterdream.item.LootstableCreate3Item;
-import net.pasterdream.item.LootstableCreate2Item;
-import net.pasterdream.item.LootstableCreate1Item;
-import net.pasterdream.item.LootstableCreate0Item;
-import net.pasterdream.item.LightningSpellItem;
-import net.pasterdream.item.LightningItemItem;
-import net.pasterdream.item.LightOrganItem;
-import net.pasterdream.item.LightMossPhantomMembraneItem;
-import net.pasterdream.item.LightButterflyCurioItem;
-import net.pasterdream.item.LegendDragonHornIceCreamItem;
-import net.pasterdream.item.JungleSporeItem;
-import net.pasterdream.item.JellyfishMudItem;
-import net.pasterdream.item.JellyfishJelloItem;
-import net.pasterdream.item.IceshadowHammerItem;
-import net.pasterdream.item.IceshadowHammerEmbryoItem;
-import net.pasterdream.item.IceshadowCurioItem;
-import net.pasterdream.item.IceSpellItem;
-import net.pasterdream.item.HoneyJuiceItem;
-import net.pasterdream.item.HiyoriHeadItem;
-import net.pasterdream.item.Hithard1RingItem;
-import net.pasterdream.item.Hithard0RingItem;
-import net.pasterdream.item.HeartChocolate2Item;
-import net.pasterdream.item.HeartChocolate1Item;
-import net.pasterdream.item.HeartChocolate0Item;
-import net.pasterdream.item.Health0NecklaceItem;
-import net.pasterdream.item.HealingSpellItem;
-import net.pasterdream.item.GuidingDrugItem;
-import net.pasterdream.item.GrassSwordItem;
-import net.pasterdream.item.GoldenrodTeaItem;
-import net.pasterdream.item.GoldCharmItem;
-import net.pasterdream.item.GlassjarItem;
-import net.pasterdream.item.GlassCupItem;
-import net.pasterdream.item.GingerbreadManItem;
-import net.pasterdream.item.GhostFaceHeadItem;
-import net.pasterdream.item.GarlandItem;
-import net.pasterdream.item.FurySpellItem;
-import net.pasterdream.item.FriedEggItem;
-import net.pasterdream.item.FourleafCloverCurioItem;
-import net.pasterdream.item.ForsakensWingItem;
-import net.pasterdream.item.FlourItem;
-import net.pasterdream.item.Fire0NecklaceItem;
-import net.pasterdream.item.FigItem;
-import net.pasterdream.item.FeatherNecklaceItem;
-import net.pasterdream.item.FabricItem;
-import net.pasterdream.item.ExcavatorItem;
-import net.pasterdream.item.EvasionCloakItem;
-import net.pasterdream.item.EnhanceStone1Item;
-import net.pasterdream.item.EnhanceStone0Item;
-import net.pasterdream.item.EndeyeCharmItem;
-import net.pasterdream.item.EmbryoRingItem;
-import net.pasterdream.item.EmbryoNecklaceItem;
-import net.pasterdream.item.EmbryoCharmItem;
-import net.pasterdream.item.EmbryoBeltItem;
-import net.pasterdream.item.ElixirBottleItem;
-import net.pasterdream.item.ElderGuardianScaleItem;
-import net.pasterdream.item.EggdoughItem;
-import net.pasterdream.item.DyedreamquartzItem;
-import net.pasterdream.item.DyedreamUpgradeItem;
-import net.pasterdream.item.DyedreamSwordItem;
-import net.pasterdream.item.DyedreamSword0Item;
-import net.pasterdream.item.DyedreamShovelItem;
-import net.pasterdream.item.DyedreamPopsicleItem;
-import net.pasterdream.item.DyedreamPickaxeItem;
-import net.pasterdream.item.DyedreamPerfumeItem;
-import net.pasterdream.item.DyedreamNuggetItem;
-import net.pasterdream.item.DyedreamJuiceItem;
-import net.pasterdream.item.DyedreamIngotItem;
-import net.pasterdream.item.DyedreamHoeItem;
-import net.pasterdream.item.DyedreamHammerItem;
-import net.pasterdream.item.DyedreamFruitItem;
-import net.pasterdream.item.DyedreamFlowerTeaItem;
-import net.pasterdream.item.DyedreamFlowerTea0Item;
-import net.pasterdream.item.DyedreamDyeItem;
-import net.pasterdream.item.DyedreamDustPieceItem;
-import net.pasterdream.item.DyedreamDustItem;
-import net.pasterdream.item.DyedreamCorollaItem;
-import net.pasterdream.item.DyedreamBudNuggetItem;
-import net.pasterdream.item.DyedreamBaseItem;
-import net.pasterdream.item.DyedreamAxeItem;
-import net.pasterdream.item.DyedreamArmorItem;
-import net.pasterdream.item.DukeCoinCurioItem;
-import net.pasterdream.item.DreamwishItem;
-import net.pasterdream.item.Dreamnotes9Item;
-import net.pasterdream.item.Dreamnotes8Item;
-import net.pasterdream.item.Dreamnotes7Item;
-import net.pasterdream.item.Dreamnotes6Item;
-import net.pasterdream.item.Dreamnotes5Item;
-import net.pasterdream.item.Dreamnotes4Item;
-import net.pasterdream.item.Dreamnotes3Item;
-import net.pasterdream.item.Dreamnotes2Item;
-import net.pasterdream.item.Dreamnotes1Item;
-import net.pasterdream.item.Dreamnotes14Item;
-import net.pasterdream.item.Dreamnotes13Item;
-import net.pasterdream.item.Dreamnotes12Item;
-import net.pasterdream.item.Dreamnotes11Item;
-import net.pasterdream.item.Dreamnotes10Item;
-import net.pasterdream.item.Dreamnotes0Item;
-import net.pasterdream.item.DreamjuiceItem;
-import net.pasterdream.item.DreamharpOfWandererItem;
-import net.pasterdream.item.DreamWandItem;
-import net.pasterdream.item.DreamWandEmbryoItem;
-import net.pasterdream.item.DreamTravelerBeltItem;
-import net.pasterdream.item.DreamMeterItem;
-import net.pasterdream.item.DreamFertilizerItem;
-import net.pasterdream.item.DreamCottonCandyItem;
-import net.pasterdream.item.DreamCoin1Item;
-import net.pasterdream.item.DreamCoin0Item;
-import net.pasterdream.item.DreamAurorianSteelItem;
-import net.pasterdream.item.DoughItem;
-import net.pasterdream.item.DesertSwordItem;
-import net.pasterdream.item.DegenerateBodysItem;
-import net.pasterdream.item.DeepTreasure1Item;
-import net.pasterdream.item.DeepTreasure0Item;
-import net.pasterdream.item.DarkAlllegoryCurioItem;
-import net.pasterdream.item.CrossNecklaceItem;
-import net.pasterdream.item.CreativeSwordItem;
-import net.pasterdream.item.CradleInOnesArmsItem;
-import net.pasterdream.item.CounterRingItem;
-import net.pasterdream.item.CottonItem;
-import net.pasterdream.item.CopperSwordItem;
-import net.pasterdream.item.CopperShovelItem;
-import net.pasterdream.item.CopperPickaxeItem;
-import net.pasterdream.item.CopperHoeItem;
-import net.pasterdream.item.CopperAxeItem;
-import net.pasterdream.item.CopperArmorItem;
-import net.pasterdream.item.CongealWindItem;
-import net.pasterdream.item.CoarseSaltItem;
-import net.pasterdream.item.ChocolateMatchaCakeItem;
-import net.pasterdream.item.ChocolateItem;
-import net.pasterdream.item.ChargedAmethystItem;
-import net.pasterdream.item.CeciliacareCharmItem;
-import net.pasterdream.item.CarapaxCharmItem;
-import net.pasterdream.item.CandyCaneItem;
-import net.pasterdream.item.CalleCard9Item;
-import net.pasterdream.item.CalleCard8Item;
-import net.pasterdream.item.CalleCard7Item;
-import net.pasterdream.item.CalleCard6Item;
-import net.pasterdream.item.CalleCard5Item;
-import net.pasterdream.item.CalleCard4Item;
-import net.pasterdream.item.CalleCard3Item;
-import net.pasterdream.item.CalleCard2Item;
-import net.pasterdream.item.CalleCard1Item;
-import net.pasterdream.item.CalleCard0Item;
-import net.pasterdream.item.CalaisSpiceBottleCurioItem;
-import net.pasterdream.item.CakeBaseItem;
-import net.pasterdream.item.Buncake6Item;
-import net.pasterdream.item.Buncake5Item;
-import net.pasterdream.item.Buncake4Item;
-import net.pasterdream.item.Buncake3Item;
-import net.pasterdream.item.Buncake2Item;
-import net.pasterdream.item.Buncake1Item;
-import net.pasterdream.item.Buncake0Item;
-import net.pasterdream.item.BubbleTeaItem;
-import net.pasterdream.item.BubbleGumItem;
-import net.pasterdream.item.Brokennotes0Item;
-import net.pasterdream.item.BrokenHeroSwordItem;
-import net.pasterdream.item.BrightButterflyCurioItem;
-import net.pasterdream.item.BreadSliceItem;
-import net.pasterdream.item.BoneWingFireBallItem;
-import net.pasterdream.item.BobojiCurioItem;
-import net.pasterdream.item.Blueprint1Item;
-import net.pasterdream.item.Blueprint0Item;
-import net.pasterdream.item.BlueHeartOfTheSeaItem;
-import net.pasterdream.item.BlueDewItem;
-import net.pasterdream.item.BlackstickItem;
-import net.pasterdream.item.BlackmetalIngotItem;
-import net.pasterdream.item.BlackmetalGrainItem;
-import net.pasterdream.item.BlackBeetleVocalcordItem;
-import net.pasterdream.item.BlackBeetleCarapaceItem;
-import net.pasterdream.item.BasaltSnailShellItem;
-import net.pasterdream.item.BaconeEggItem;
-import net.pasterdream.item.AppleJuiceItem;
-import net.pasterdream.item.AngelWingItem;
-import net.pasterdream.item.AngelBlockItemItem;
-import net.pasterdream.item.AmberCandyItem;
-import net.pasterdream.item.AllkindsRingItem;
-import net.pasterdream.item.AaroncosDiscItem;
-import net.pasterdream.item.AaroncosArenaCreateItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
+import net.pasterdream.item.*;
 import net.pasterdream.block.display.WindKnightSpawnblock4DisplayItem;
 import net.pasterdream.block.display.WindKnightSpawnblock3DisplayItem;
 import net.pasterdream.block.display.WindKnightSpawnblock2DisplayItem;
@@ -392,10 +63,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.DoubleHighBlockItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ArmorItem;
+import net.pasterdream.procedures.LegendDragonHornIceCreamPr0Procedure;
+import net.pasterdream.procedures.RageElixirProcedure;
+import org.jetbrains.annotations.NotNull;
 
 public class PasterdreamModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, PasterdreamMod.MODID);
@@ -512,8 +182,26 @@ public class PasterdreamModItems {
 	public static final RegistryObject<Item> FURY_SPELL = REGISTRY.register("fury_spell", () -> new FurySpellItem());
 	public static final RegistryObject<Item> ICE_SPELL = REGISTRY.register("ice_spell", () -> new IceSpellItem());
 	public static final RegistryObject<Item> GLASSJAR = REGISTRY.register("glassjar", () -> new GlassjarItem());
-	public static final RegistryObject<Item> WATER_GLASSJAR = REGISTRY.register("water_glassjar", () -> new WaterGlassjarItem());
-	public static final RegistryObject<Item> MILK_GLASSJAR = REGISTRY.register("milk_glassjar", () -> new MilkGlassjarItem());
+	public static final RegistryObject<Item> WATER_GLASSJAR = REGISTRY.register("water_glassjar", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASSJAR.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .build()),PasterdreamModItems.GLASSJAR));
+	public static final RegistryObject<Item> MILK_GLASSJAR = REGISTRY.register("milk_glassjar", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASSJAR.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .build()),PasterdreamModItems.GLASSJAR));
 	public static final RegistryObject<Item> YEAST = REGISTRY.register("yeast", () -> new YeastItem());
 	public static final RegistryObject<Item> GUIDING_DRUG = REGISTRY.register("guiding_drug", () -> new GuidingDrugItem());
 	public static final RegistryObject<Item> DOUGH = REGISTRY.register("dough", () -> new DoughItem());
@@ -525,47 +213,483 @@ public class PasterdreamModItems {
 	public static final RegistryObject<Item> FIG = REGISTRY.register("fig", () -> new FigItem());
 	public static final RegistryObject<Item> DREAMJUICE = REGISTRY.register("dreamjuice", () -> new DreamjuiceItem());
 	public static final RegistryObject<Item> AMBER_CANDY = REGISTRY.register("amber_candy", () -> new AmberCandyItem());
-	public static final RegistryObject<Item> QUEER_SOUP = REGISTRY.register("queer_soup", () -> new QueerSoupItem());
-	public static final RegistryObject<Item> DYEDREAM_FLOWER_TEA_0 = REGISTRY.register("dyedream_flower_tea_0", () -> new DyedreamFlowerTea0Item());
-	public static final RegistryObject<Item> DYEDREAM_FLOWER_TEA = REGISTRY.register("dyedream_flower_tea", () -> new DyedreamFlowerTeaItem());
-	public static final RegistryObject<Item> GLASS_CUP = REGISTRY.register("glass_cup", () -> new GlassCupItem());
-	public static final RegistryObject<Item> DYEDREAM_JUICE = REGISTRY.register("dyedream_juice", () -> new DyedreamJuiceItem());
-	public static final RegistryObject<Item> APPLE_JUICE = REGISTRY.register("apple_juice", () -> new AppleJuiceItem());
-	public static final RegistryObject<Item> HONEY_JUICE = REGISTRY.register("honey_juice", () -> new HoneyJuiceItem());
-	public static final RegistryObject<Item> WATERMELON_JUICE = REGISTRY.register("watermelon_juice", () -> new WatermelonJuiceItem());
-	public static final RegistryObject<Item> DYEDREAM_POPSICLE = REGISTRY.register("dyedream_popsicle", () -> new DyedreamPopsicleItem());
-	public static final RegistryObject<Item> FRIED_EGG = REGISTRY.register("fried_egg", () -> new FriedEggItem());
-	public static final RegistryObject<Item> BACONE_EGG = REGISTRY.register("bacone_egg", () -> new BaconeEggItem());
-	public static final RegistryObject<Item> RICECAKE = REGISTRY.register("ricecake", () -> new RicecakeItem());
-	public static final RegistryObject<Item> SANDWICH_0 = REGISTRY.register("sandwich_0", () -> new Sandwich0Item());
-	public static final RegistryObject<Item> CHOCOLATE = REGISTRY.register("chocolate", () -> new ChocolateItem());
+    public static final RegistryObject<Item> GLASS_CUP = REGISTRY.register("glass_cup", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> QUEER_SOUP = REGISTRY.register("queer_soup",  () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(Items.BOWL)
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .effect(()->new MobEffectInstance(PasterdreamModMobEffects.MELT_DREAM_ENERGY_INCREASE.get(), 1),1)
+                    .effect(()->new MobEffectInstance(PasterdreamModMobEffects.FONDILLUSION_BUFF.get(), 6000),1)
+                    .build()),1,() -> Items.BOWL){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 24;
+        }
+    });
+	public static final RegistryObject<Item> UNCOOKED_DYEDREAM_FLOWER_TEA = REGISTRY.register("uncooked_dyedream_flower_tea", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .build())){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 30;
+        }
+    });
+	public static final RegistryObject<Item> DYEDREAM_FLOWER_TEA = REGISTRY.register("dyedream_flower_tea", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .effect(()->new MobEffectInstance(MobEffects.HEAL, 1),1)
+                    .build())){
+        @Override
+        @OnlyIn(Dist.CLIENT)
+        public boolean isFoil(ItemStack itemstack) {
+            return true;
+        }
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 30;
+        }
+    });
+	public static final RegistryObject<Item> DYEDREAM_JUICE = REGISTRY.register("dyedream_juice", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(1)
+                    .saturationMod(0.2f)
+                    .alwaysEat()
+                    .build()),1,true){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 24;
+        }
+        @Override
+        public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+            if(!world.isClientSide && entity instanceof Player pl)
+            {
+                MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(pl,0.2);
+            }
+            return super.finishUsingItem(itemstack, world, entity);
+        }
+    });
+	public static final RegistryObject<Item> APPLE_JUICE = REGISTRY.register("apple_juice", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(4)
+                    .saturationMod(0.2f)
+                    .alwaysEat()
+                    .build())){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 24;
+        }
+    });
+	public static final RegistryObject<Item> HONEY_JUICE = REGISTRY.register("honey_juice", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(6)
+                    .saturationMod(0.1f)
+                    .alwaysEat()
+                    .build()),1,true){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 24;
+        }
+        @Override
+        public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+            if(!world.isClientSide)
+            {
+                entity.removeEffect(MobEffects.POISON);
+            }
+            return super.finishUsingItem(itemstack, world, entity);
+        }
+    });
+	public static final RegistryObject<Item> WATERMELON_JUICE = REGISTRY.register("watermelon_juice", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASS_CUP.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(2)
+                    .saturationMod(0.1f)
+                    .alwaysEat()
+                    .build())){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 24;
+        }
+    });
+	public static final RegistryObject<Item> DYEDREAM_POPSICLE = REGISTRY.register("dyedream_popsicle", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(Items.STICK)
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(1)
+                    .saturationMod(0.4f)
+                    .build()),2,true,()->Items.STICK){
+        @Override
+        public UseAnim getUseAnimation(ItemStack itemstack) {
+            return UseAnim.EAT;
+        }
+        @Override
+        public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+            if(!world.isClientSide)
+            {
+                if(entity instanceof Player pl)
+                {
+                    MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(pl,0.18);
+                }
+                if(entity.isOnFire())
+                {
+                    entity.setRemainingFireTicks(Math.max(0,entity.getRemainingFireTicks() - 100));
+                }
+            }
+            return super.finishUsingItem(itemstack, world, entity);
+        }
+    });
+	public static final RegistryObject<Item> FRIED_EGG = REGISTRY.register("fried_egg", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> BACONE_EGG = REGISTRY.register("bacone_egg", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(10)
+                            .saturationMod(1.2f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 48;
+        }
+    });
+	public static final RegistryObject<Item> RICECAKE = REGISTRY.register("ricecake", () -> new Item(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.4f).build())));
+	public static final RegistryObject<Item> SANDWICH = REGISTRY.register("sandwich", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(10)
+                            .saturationMod(0.9f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())));
+	public static final RegistryObject<Item> CHOCOLATE = REGISTRY.register("chocolate", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.375f)
+                            .build())));
 	public static final RegistryObject<Item> POPPING_CANDY = REGISTRY.register("popping_candy", () -> new PoppingCandyItem());
-	public static final RegistryObject<Item> CHOCOLATE_MATCHA_CAKE = REGISTRY.register("chocolate_matcha_cake", () -> new ChocolateMatchaCakeItem());
-	public static final RegistryObject<Item> SWISS_ROLL = REGISTRY.register("swiss_roll", () -> new SwissRollItem());
-	public static final RegistryObject<Item> STUFFED_WAFER_COOKIES = REGISTRY.register("stuffed_wafer_cookies", () -> new StuffedWaferCookiesItem());
-	public static final RegistryObject<Item> BUNCAKE_0 = REGISTRY.register("buncake_0", () -> new Buncake0Item());
-	public static final RegistryObject<Item> BUNCAKE_1 = REGISTRY.register("buncake_1", () -> new Buncake1Item());
-	public static final RegistryObject<Item> BUNCAKE_2 = REGISTRY.register("buncake_2", () -> new Buncake2Item());
-	public static final RegistryObject<Item> BUNCAKE_3 = REGISTRY.register("buncake_3", () -> new Buncake3Item());
-	public static final RegistryObject<Item> BUNCAKE_4 = REGISTRY.register("buncake_4", () -> new Buncake4Item());
-	public static final RegistryObject<Item> BUNCAKE_5 = REGISTRY.register("buncake_5", () -> new Buncake5Item());
-	public static final RegistryObject<Item> BUNCAKE_6 = REGISTRY.register("buncake_6", () -> new Buncake6Item());
+	public static final RegistryObject<Item> CHOCOLATE_MATCHA_CAKE = REGISTRY.register("chocolate_matcha_cake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(8)
+                            .saturationMod(1f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(),1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> SWISS_ROLL = REGISTRY.register("swiss_roll", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(6)
+                            .saturationMod(0.8f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())));
+	public static final RegistryObject<Item> STUFFED_WAFER_COOKIES = REGISTRY.register("stuffed_wafer_cookies", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(7)
+                            .saturationMod(1f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())));
+	public static final RegistryObject<Item> CREAM_BUNCAKE = REGISTRY.register("cream_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .build())));
+	public static final RegistryObject<Item> BERRY_BUNCAKE = REGISTRY.register("berry_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> POTATO_BUNCAKE = REGISTRY.register("potato_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.DIG_SPEED, 1200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> MELON_BUNCAKE = REGISTRY.register("melon_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.REGENERATION, 400, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> PUMPKIN_BUNCAKE = REGISTRY.register("pumpkin_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.JUMP, 1200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> GLOW_BERRY_BUNCAKE = REGISTRY.register("glow_berry_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.NIGHT_VISION, 1200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
+	public static final RegistryObject<Item> DYEDREAM_FRUIT_BUNCAKE = REGISTRY.register("dyedream_fruit_buncake", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(MobEffects.REGENERATION, 200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0),1)
+                            .build())));
 	public static final RegistryObject<Item> HEART_CHOCOLATE_0 = REGISTRY.register("heart_chocolate_0", () -> new HeartChocolate0Item());
 	public static final RegistryObject<Item> HEART_CHOCOLATE_1 = REGISTRY.register("heart_chocolate_1", () -> new HeartChocolate1Item());
 	public static final RegistryObject<Item> HEART_CHOCOLATE_2 = REGISTRY.register("heart_chocolate_2", () -> new HeartChocolate2Item());
-	public static final RegistryObject<Item> GINGERBREAD_MAN = REGISTRY.register("gingerbread_man", () -> new GingerbreadManItem());
-	public static final RegistryObject<Item> CANDY_CANE = REGISTRY.register("candy_cane", () -> new CandyCaneItem());
-	public static final RegistryObject<Item> BUBBLE_GUM = REGISTRY.register("bubble_gum", () -> new BubbleGumItem());
-	public static final RegistryObject<Item> DREAM_COTTON_CANDY = REGISTRY.register("dream_cotton_candy", () -> new DreamCottonCandyItem());
-	public static final RegistryObject<Item> YINHUL_COTTON_CANDY = REGISTRY.register("yinhul_cotton_candy", () -> new YinhulCottonCandyItem());
-	public static final RegistryObject<Item> JELLYFISH_MUD = REGISTRY.register("jellyfish_mud", () -> new JellyfishMudItem());
-	public static final RegistryObject<Item> JELLYFISH_JELLO = REGISTRY.register("jellyfish_jello", () -> new JellyfishJelloItem());
+	public static final RegistryObject<Item> GINGERBREAD_MAN = REGISTRY.register("gingerbread_man", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(5)
+                            .saturationMod(0.6f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())));
+	public static final RegistryObject<Item> CANDY_CANE = REGISTRY.register("candy_cane", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(3)
+                            .saturationMod(0.5f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 1200, 0, false, false),1)
+                            .build())));
+	public static final RegistryObject<Item> BUBBLE_GUM = REGISTRY.register("bubble_gum", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(1)
+                            .saturationMod(0)
+                            .alwaysEat()
+                            .fast()
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1, 2),1)
+                            .build())){
+        @Override
+        public int getUseDuration(@NotNull ItemStack itemstack) {
+            return 64;
+        }
+    });
+	public static final RegistryObject<Item> DREAM_COTTON_CANDY = REGISTRY.register("dream_cotton_candy", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.625f)
+                            .alwaysEat()
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.MELT_DREAM_ENERGY_INCREASE.get(), 1, 2),1)
+                            .build())));
+	public static final RegistryObject<Item> YINHUL_COTTON_CANDY = REGISTRY.register("yinhul_cotton_candy", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(6)
+                            .saturationMod(0.75f)
+                            .alwaysEat()
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1, 9),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.MELT_DREAM_ENERGY_INCREASE.get(), 1, 19),1)
+                            .build())));
+	public static final RegistryObject<Item> JELLYFISH_MUD = REGISTRY.register("jellyfish_mud", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(1)
+                            .saturationMod(0f)
+                            .effect(() -> new MobEffectInstance(PasterdreamModMobEffects.WINDPROOF_BUFF.get(), 1200, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_DECREASE.get(), 1, 2),1)
+                            .build()),1));
+	public static final RegistryObject<Item> JELLYFISH_JELLO = REGISTRY.register("jellyfish_jello", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(4)
+                            .saturationMod(0.5f)
+                            .alwaysEat()
+                            .effect(()-> new MobEffectInstance(PasterdreamModMobEffects.WINDPROOF_BUFF.get(), 12000, 0),1)
+                            .build()),1));
 	public static final RegistryObject<Item> ELIXIR_BOTTLE = REGISTRY.register("elixir_bottle", () -> new ElixirBottleItem());
-	public static final RegistryObject<Item> MELTDREAM_ELIXIR_BOTTLE = REGISTRY.register("meltdream_elixir_bottle", () -> new MeltdreamElixirBottleItem());
-	public static final RegistryObject<Item> RAGE_ELIXIR_0 = REGISTRY.register("rage_elixir_0", () -> new RageElixir0Item());
-	public static final RegistryObject<Item> PINEAPPLE_LOVE_SEA = REGISTRY.register("pineapple_love_sea", () -> new PineappleLoveSeaItem());
-	public static final RegistryObject<Item> GOLDENROD_TEA = REGISTRY.register("goldenrod_tea", () -> new GoldenrodTeaItem());
-	public static final RegistryObject<Item> LEGEND_DRAGON_HORN_ICE_CREAM = REGISTRY.register("legend_dragon_horn_ice_cream", () -> new LegendDragonHornIceCreamItem());
+	public static final RegistryObject<Item> MELTDREAM_ELIXIR_BOTTLE = REGISTRY.register("meltdream_elixir_bottle", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.ELIXIR_BOTTLE.get())
+            .stacksTo(1)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(4)
+                    .saturationMod(0.25f)
+                    .alwaysEat()
+                    .effect(()->new MobEffectInstance(PasterdreamModMobEffects.MELT_DREAM_ENERGY_INCREASE.get(),1,24),1)
+                    .build()),PasterdreamModItems.ELIXIR_BOTTLE));
+	public static final RegistryObject<Item> RAGE_ELIXIR_0 = REGISTRY.register("rage_elixir_0", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.ELIXIR_BOTTLE.get())
+            .stacksTo(1)
+            .rarity(Rarity.UNCOMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(0)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .effect(()->new MobEffectInstance(PasterdreamModMobEffects.MELT_DREAM_ENERGY_INCREASE.get(),1,24),1)
+                    .build()),3,true,PasterdreamModItems.ELIXIR_BOTTLE){
+        @Override
+        public int getUseDuration(ItemStack itemstack) {
+            return 40;
+        }
+        @Override
+        @OnlyIn(Dist.CLIENT)
+        public boolean isFoil(ItemStack itemstack) {
+            return true;
+        }
+        @Override
+        public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+            double x = entity.getX();
+            double y = entity.getY();
+            double z = entity.getZ();
+            RageElixirProcedure.execute(world, x, y, z, entity,1);
+            return super.finishUsingItem(itemstack, world, entity);
+        }
+    });
+	public static final RegistryObject<Item> PINEAPPLE_LOVE_SEA = REGISTRY.register("pineapple_love_sea", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.UNCOMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(3)
+                            .saturationMod(0.5f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1, 19),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 6000, 0, false, false),1)
+                            .build()),1){
+        @Override
+        public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
+            return UseAnim.DRINK;
+        }
+    });
+	public static final RegistryObject<Item> GOLDENROD_TEA = REGISTRY.register("goldenrod_tea", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(PasterdreamModItems.GLASSJAR.get())
+            .stacksTo(64)
+            .rarity(Rarity.COMMON)
+            .food((new FoodProperties.Builder())
+                    .nutrition(1)
+                    .saturationMod(0)
+                    .alwaysEat()
+                    .effect(()-> new MobEffectInstance(PasterdreamModMobEffects.GOLDENROD_TEA_BUFF.get(), 3600, 0),1)
+                    .build()),1,PasterdreamModItems.GLASSJAR));
+	public static final RegistryObject<Item> LEGEND_DRAGON_HORN_ICE_CREAM = REGISTRY.register("legend_dragon_horn_ice_cream", () -> new PasterDreamGlassDrinkItem(new Item
+            .Properties()
+            .craftRemainder(Items.BOWL)
+            .stacksTo(64)
+            .rarity(Rarity.EPIC)
+            .food((new FoodProperties.Builder())
+                    .nutrition(10)
+                    .saturationMod(1.2f)
+                    .alwaysEat()
+                    .build()),2,() ->Items.BOWL){
+        @Override
+        public UseAnim getUseAnimation(ItemStack itemstack) {
+            return UseAnim.EAT;
+        }
+        @Override
+        public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+            double x = entity.getX();
+            double y = entity.getY();
+            double z = entity.getZ();
+            LegendDragonHornIceCreamPr0Procedure.execute(world, x, y, z, entity);
+            return super.finishUsingItem(itemstack,world,entity);
+        }
+    });
 	public static final RegistryObject<Item> DYEDREAM_PERFUME = REGISTRY.register("dyedream_perfume", () -> new DyedreamPerfumeItem());
 	public static final RegistryObject<Item> MELTDREAM_CHEST = REGISTRY.register(PasterdreamModBlocks.MELTDREAM_CHEST.getId().getPath(), () -> new MeltdreamChestDisplayItem(PasterdreamModBlocks.MELTDREAM_CHEST.get(), new Item.Properties()));
 	public static final RegistryObject<Item> MELTDREAM_CHEST_OPEN = REGISTRY.register(PasterdreamModBlocks.MELTDREAM_CHEST_OPEN.getId().getPath(),
@@ -1029,7 +1153,17 @@ public class PasterdreamModItems {
 	public static final RegistryObject<Item> QYM_ARMOR_LEGGINGS = REGISTRY.register("qym_armor_leggings", () -> new QymArmorItem.Leggings());
 	public static final RegistryObject<Item> QYM_ARMOR_BOOTS = REGISTRY.register("qym_armor_boots", () -> new QymArmorItem.Boots());
 	public static final RegistryObject<Item> TABITEM_2 = REGISTRY.register("tabitem_2", () -> new Tabitem2Item());
-	public static final RegistryObject<Item> ODD_BACONE_EGG = REGISTRY.register("odd_bacone_egg", () -> new OddBaconeEggItem());
+	public static final RegistryObject<Item> ODD_BACONE_EGG = REGISTRY.register("odd_bacone_egg", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(11)
+                            .saturationMod(1.5f)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_INCREASE.get(), 1, 1),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.COOK_BUFF.get(), 2400, 0),1)
+                            .build()),
+            1));
 	public static final RegistryObject<Item> MANADUST = REGISTRY.register("manadust", () -> new ManadustItem());
 	public static final RegistryObject<Item> BUBBLE_TEA = REGISTRY.register("bubble_tea", () -> new BubbleTeaItem());
 	public static final RegistryObject<Item> ALLKINDS_RING = REGISTRY.register("allkinds_ring", () -> new AllkindsRingItem());
@@ -1062,8 +1196,8 @@ public class PasterdreamModItems {
 	public static final RegistryObject<Item> DREAMNOTES_12 = REGISTRY.register("dreamnotes_12", () -> new Dreamnotes12Item());
 	public static final RegistryObject<Item> DREAMNOTES_13 = REGISTRY.register("dreamnotes_13", () -> new Dreamnotes13Item());
 	public static final RegistryObject<Item> DREAMNOTES_14 = REGISTRY.register("dreamnotes_14", () -> new Dreamnotes14Item());
-	public static final RegistryObject<Item> BLUEPRINT_0 = REGISTRY.register("blueprint_0", () -> new Blueprint0Item());
-	public static final RegistryObject<Item> BLUEPRINT_1 = REGISTRY.register("blueprint_1", () -> new Blueprint1Item());
+	public static final RegistryObject<Item> BLUEPRINT_0 = REGISTRY.register("blueprint_0", () -> new BlueprintItem("pasterdream:shadow_blast_furnace"));
+	public static final RegistryObject<Item> BLUEPRINT_1 = REGISTRY.register("blueprint_1", () -> new BlueprintItem("pasterdream:weapon_workshop",1));
 	public static final RegistryObject<Item> MEMORY_GEM_0 = REGISTRY.register("memory_gem_0", () -> new MemoryGem0Item());
 	public static final RegistryObject<Item> MEMENTO_ITEM_01 = REGISTRY.register("memento_item_01", () -> new MementoItem01Item());
 	public static final RegistryObject<Item> MEMENTO_ITEM_05 = REGISTRY.register("memento_item_05", () -> new MementoItem05Item());
@@ -1130,11 +1264,19 @@ public class PasterdreamModItems {
 			() -> new WindKnightSpawnblock3DisplayItem(PasterdreamModBlocks.WIND_KNIGHT_SPAWNBLOCK_3.get(), new Item.Properties()));
 	public static final RegistryObject<Item> WIND_KNIGHT_SPAWNBLOCK_4 = REGISTRY.register(PasterdreamModBlocks.WIND_KNIGHT_SPAWNBLOCK_4.getId().getPath(),
 			() -> new WindKnightSpawnblock4DisplayItem(PasterdreamModBlocks.WIND_KNIGHT_SPAWNBLOCK_4.get(), new Item.Properties()));
-	public static final RegistryObject<Item> FURY_SPELL_ENTITY_SPAWN_EGG = REGISTRY.register("fury_spell_entity_spawn_egg", () -> new ForgeSpawnEggItem(PasterdreamModEntities.FURY_SPELL_ENTITY, -1, -1, new Item.Properties()));
 	public static final RegistryObject<Item> FOX_FIRE_SPAWN_EGG = REGISTRY.register("fox_fire_spawn_egg", () -> new ForgeSpawnEggItem(PasterdreamModEntities.FOX_FIRE, -4530446, -14311978, new Item.Properties()));
 	public static final RegistryObject<Item> MOSS_PHANTOM_MEMBRANE = REGISTRY.register("moss_phantom_membrane", () -> new MossPhantomMembraneItem());
 	public static final RegistryObject<Item> LIGHT_MOSS_PHANTOM_MEMBRANE = REGISTRY.register("light_moss_phantom_membrane", () -> new LightMossPhantomMembraneItem());
-	public static final RegistryObject<Item> LIGHT_ORGAN = REGISTRY.register("light_organ", () -> new LightOrganItem());
+	public static final RegistryObject<Item> LIGHT_ORGAN = REGISTRY.register("light_organ", () -> new PasterDreamFoodItem(
+            new Item.Properties()
+                    .stacksTo(64)
+                    .rarity(Rarity.COMMON)
+                    .food((new FoodProperties.Builder())
+                            .nutrition(1)
+                            .saturationMod(0f)
+                            .effect(()->new MobEffectInstance(MobEffects.GLOWING, 100, 0),1)
+                            .effect(()->new MobEffectInstance(PasterdreamModMobEffects.SAN_DECREASE.get(), 1),1)
+                            .build()),1));
 	public static final RegistryObject<Item> SHADOW_BREATH = REGISTRY.register("shadow_breath", () -> new ShadowBreathItem());
 	public static final RegistryObject<Item> SMALL_STONE_SPIRIT_SPAWN_EGG = REGISTRY.register("small_stone_spirit_spawn_egg", () -> new ForgeSpawnEggItem(PasterdreamModEntities.SMALL_STONE_SPIRIT, -3937560, -9340294, new Item.Properties()));
 	public static final RegistryObject<Item> SMALL_STONE_SPIRIT_BLOCK = block(PasterdreamModBlocks.SMALL_STONE_SPIRIT_BLOCK);

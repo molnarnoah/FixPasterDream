@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.PasterdreamMod;
@@ -29,15 +30,14 @@ public class DreamharpOfWandererPr0Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		if (entity instanceof Player) {
-			if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 2) {
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 2));
+		if (entity instanceof Player pl) {
+			if (MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(pl,2)) {
 				if (world instanceof ServerLevel _level)
 					_level.sendParticles(ParticleTypes.HEART, x, y, z, 7, 0.45, 0.8, 0.45, 0.5);
-				PasterdreamMod.queueServerWork(5, () -> {
+                PasterdreamMod.queueServerWork(5, () -> {
 					if (world instanceof ServerLevel _level)
 						_level.sendParticles(ParticleTypes.HEART, x, y, z, 7, 0.45, 0.8, 0.45, 0.5);
-					PasterdreamMod.queueServerWork(5, () -> {
+                    PasterdreamMod.queueServerWork(5, () -> {
 						if (world instanceof ServerLevel _level)
 							_level.sendParticles(ParticleTypes.HEART, x, y, z, 7, 0.45, 0.8, 0.45, 0.5);
 					});
@@ -60,7 +60,7 @@ public class DreamharpOfWandererPr0Procedure {
 					}
 				}
 			} else {
-				if (entity instanceof Player _player && !_player.level().isClientSide())
+				if (entity instanceof Player _player && _player.level().isClientSide())
 					_player.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
 			}
 		}

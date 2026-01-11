@@ -18,6 +18,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 
 public class MeltdreamChestLootsPr0Procedure {
+    //todo 暂时废弃
 	public static void execute(LevelAccessor world, double x, double y, double z) {
 		if ((world instanceof Level _lvl ? _lvl.dimension() : Level.OVERWORLD) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:dyedream_world")))) {
 			if (!world.isClientSide()) {

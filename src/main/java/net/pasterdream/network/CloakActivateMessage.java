@@ -51,7 +51,6 @@ public class CloakActivateMessage {
 		if (!world.hasChunkAt(entity.blockPosition()))
 			return;
 		if (type == 0) {
-
 			CloakActivatePr0Procedure.execute(world, x, y, z, entity);
 		}
 	}

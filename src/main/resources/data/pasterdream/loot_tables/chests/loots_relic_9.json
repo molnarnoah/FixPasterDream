@@ -178,7 +178,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_0",
+          "name": "pasterdream:cream_buncake",
           "weight": 1,
           "functions": [
             {

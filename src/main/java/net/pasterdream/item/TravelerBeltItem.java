@@ -1,10 +1,14 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -35,32 +39,23 @@ public class TravelerBeltItem extends Item implements ICurioItem {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(Component.literal("\u54C1\u8D28\uFF1A\u00A7f\u666E\u901A \u2605"));
-		list.add(Component.literal("\u00a77\u25aa \u00a79\u77ac\u8eab\u672f\u9971\u98df\u6d88\u8017-50%"));
 	}
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        if(slotContext.entity() != null)
+        {
+            return CuriosApi.getCuriosInventory(slotContext.entity()).map(handler ->
+                            handler.findFirstCurio(stack.getItem()).isEmpty())
+                    .orElse(true);
+        }
+        return true;
+    }
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext,
+                                                                        UUID uuid, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+        attributeModifiers.put(PasterdreamModAttributes.TELEPORTATIONCONSUME.get(),modifier0);
+        return attributeModifiers;
+    }
 
-	@Override
-	public boolean canEquip(SlotContext context, ItemStack itemStack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance0 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCONSUME.get());
-			return instance0.getModifier(modifier0.getId()) == null;
-		}
-		return false;
-	}
-
-	@Override
-	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance0 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCONSUME.get());
-			if (instance0.getModifier(modifier0.getId()) == null)
-			instance0.addPermanentModifier(modifier0);
-		}
-	}
-
-	@Override
-	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance0 = player.getAttribute(PasterdreamModAttributes.TELEPORTATIONCONSUME.get());
-			instance0.removeModifier(modifier0.getId());
-		}
-	}
 }

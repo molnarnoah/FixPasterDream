@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModMobEffects;
 import net.pasterdream.init.PasterdreamModItems;
 import net.pasterdream.init.PasterdreamModAttributes;
@@ -18,7 +20,10 @@ public class QymArmorPr0Procedure {
 	public static void execute(Entity entity) {
 		if (entity == null)
 			return;
-		((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue(100);
+        if(entity instanceof ServerPlayer sp)
+        {
+            SanCapability.setPlayerSanWithCheck(sp,100);
+        }
 		if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY).getItem() == PasterdreamModItems.QYM_ARMOR_BOOTS.get()
 				&& (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.LEGS) : ItemStack.EMPTY).getItem() == PasterdreamModItems.QYM_ARMOR_LEGGINGS.get()
 				&& (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY).getItem() == PasterdreamModItems.QYM_ARMOR_CHESTPLATE.get()) {

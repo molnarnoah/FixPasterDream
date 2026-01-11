@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import net.pasterdream.init.PasterdreamModItems;
@@ -31,10 +32,11 @@ import java.util.List;
 import java.util.Comparator;
 
 public class StrawberryHeartPr0Procedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
+	public static void execute(LevelAccessor world, double x, double y, double z, LivingEntity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		if (entity instanceof LivingEntity lv ? CuriosApi.getCuriosHelper().findEquippedCurio(PasterdreamModItems.QYM_HEAD.get(), lv).isPresent() : false == true) {
+
+		if (CuriosApi.getCuriosInventory(entity).map(inv -> inv.findFirstCurio(PasterdreamModItems.QYM_HEAD.get()).isPresent()).orElse(false)) {
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 0);
 		} else {
@@ -53,7 +55,7 @@ public class StrawberryHeartPr0Procedure {
 			}
 		}
 		if (entity.isShiftKeyDown()) {
-			if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.25) {
+			if (entity instanceof Player pl && MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(pl,0.25)) {
 				if (world instanceof Level _level) {
 					if (!_level.isClientSide()) {
 						_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.note_block.guitar")), SoundSource.PLAYERS, (float) 1.2, (float) 0.8);
@@ -118,7 +120,6 @@ public class StrawberryHeartPr0Procedure {
 							}
 						}
 					}
-					((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.25));
 				}
 			} else {
 				if (entity instanceof Player _player && !_player.level().isClientSide())

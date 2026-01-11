@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 
 import net.minecraft.world.level.LevelAccessor;
@@ -25,12 +26,8 @@ public class ShadowBedPr0Procedure {
 				|| ((ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:lamp_shadow_world"))) == (world instanceof Level _lvl ? _lvl.dimension() : Level.OVERWORLD)) == false) {
 			if (entity instanceof ServerPlayer _plr5 && _plr5.level() instanceof ServerLevel
 					&& _plr5.getAdvancements().getOrStartProgress(_plr5.server.getAdvancements().getAdvancement(new ResourceLocation("pasterdream:achievement_shadow_start"))).isDone()) {
-				if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() >= 10) {
-					((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 10));
-				} else {
-					((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue(0);
-				}
-				if (!(entity instanceof ServerPlayer _plr10 && _plr10.level() instanceof ServerLevel
+                SanCapability.addPlayerSanWithCheck(_plr5, -10);
+                if (!(entity instanceof ServerPlayer _plr10 && _plr10.level() instanceof ServerLevel
 						&& _plr10.getAdvancements().getOrStartProgress(_plr10.server.getAdvancements().getAdvancement(new ResourceLocation("pasterdream:achievement_shadow_a_1"))).isDone())) {
 					if (entity instanceof ServerPlayer _player) {
 						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("pasterdream:achievement_shadow_a_1"));

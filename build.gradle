@@ -16,14 +16,18 @@ plugins {
 
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.0'
-group = 'com.yourname.modid'
-archivesBaseName = 'modid'
-
+version = mod_version
+group = mod_group_id
+jarJar.enable()
+base {
+    archivesName = mod_id
+}
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 mixin {
-    add sourceSets.main, "pasterdream.refmap.json"
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+    debug.export = true
 }
 
 minecraft {
@@ -34,32 +38,32 @@ minecraft {
     copyIdeResources = true
 
     runs {
-        client {
+        configureEach {
             workingDirectory project.file('run')
             arg '-mixin.config=pasterdream.mixins.json'
-
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
         }
 
+        client {
+
+        }
+
         server {
-            workingDirectory project.file('run')
-            arg '-mixin.config=pasterdream.mixins.json'
+            args '--nogui'
+        }
+        data {
+            // example of overriding the workingDirectory set in configureEach above
+            workingDirectory project.file('run-data')
 
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
@@ -70,9 +74,7 @@ repositories {
     }
 }
 
-sourceSets.main.resources {
-    srcDirs += 'src/generated/resources'
-}
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
         minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
@@ -87,12 +89,21 @@ dependencies {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            mod_id: mod_id,mod_version: mod_version,
+    ]
+    inputs.properties replaceProperties
 
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
 
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "pasterdream",
+                "Specification-Title"     : mod_id,
                 "Specification-Vendor"    : "Aerolite_Dust",
                 "Specification-Version"   : "1", 
                 "Implementation-Title"    : project.name,

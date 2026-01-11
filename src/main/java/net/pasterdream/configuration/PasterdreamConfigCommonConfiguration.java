@@ -19,7 +19,7 @@ public class PasterdreamConfigCommonConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> NO_RETURN_DYEDREAM_CRACK;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> DYEDREAM_ORIGIN_SPAWNPOINT;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHADOW_NPC_THIRD_DIALOGUE_AFTER_TP_PLAYER_BACK_TO_OVERWORLD;
-	public static final ForgeConfigSpec.ConfigValue<Double> PLAYER_TOTAL_TICK_UPDATE;
+	public static final ForgeConfigSpec.ConfigValue<Integer> PLAYER_TOTAL_TICK_UPDATE;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> BAN_ALL_THE_WINGS;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> BAN_TERRA_SWORD;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> BAN_FIRE_NECKLACE;
@@ -42,7 +42,7 @@ public class PasterdreamConfigCommonConfiguration {
 		SHADOW_NPC_THIRD_DIALOGUE_AFTER_TP_PLAYER_BACK_TO_OVERWORLD = BUILDER.comment("在与无名第三次对话后会被强制传送回主世界 默认：true").define("shadow npc third dialogue after tp player back to overworld", true);
 		BUILDER.pop();
 		BUILDER.push("property");
-		PLAYER_TOTAL_TICK_UPDATE = BUILDER.comment("pasterdream玩家刻功能程序更新频率，算法：每-[此配置单位时间]-进行一次更新 单位/tick，过快的更新频率可能会影响性能，过慢的频率会让部分功能显得非常迟钝，推荐频率范围[2~20]整数  默认：5").define("player total tick update", (double) 5);
+		PLAYER_TOTAL_TICK_UPDATE = BUILDER.comment("pasterdream玩家刻功能程序更新频率，算法：每-[此配置单位时间]-进行一次更新 单位/tick，过快的更新频率可能会影响性能，过慢的频率会让部分功能显得非常迟钝，推荐频率范围[2~20]整数  默认：5").define("player total tick update",  5);
 		BUILDER.pop();
 		BUILDER.push("Ban");
 		BAN_ALL_THE_WINGS = BUILDER.comment("关闭并禁止所有翅膀的功能  默认：false").define("ban all the wings", false);

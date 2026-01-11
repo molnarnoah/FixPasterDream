@@ -45,8 +45,8 @@ public class InsandBuffPr0Procedure {
 					}
 				}
 				if (Math.random() < 0.005) {
-					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-						_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 25, 0, false, false));
+					//if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+					//	_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 25, 0, false, false));
 					if (Math.random() < 0.3) {
 						if ((world.getBlockState(BlockPos.containing(x, y + 2, z))).getBlock() == Blocks.AIR) {
 							if (world instanceof ServerLevel _level) {
@@ -86,8 +86,8 @@ public class InsandBuffPr0Procedure {
 					}
 				}
 				if (Math.random() < 0.01) {
-					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-						_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 28, 0, false, false));
+					//if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+					//	_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 28, 0, false, false));
 					if (Math.random() < 0.25) {
 						if ((world.getBlockState(BlockPos.containing(x, y + 2, z))).getBlock() == Blocks.AIR) {
 							if (world instanceof ServerLevel _level) {
@@ -127,8 +127,8 @@ public class InsandBuffPr0Procedure {
 					}
 				}
 				if (Math.random() < 0.025) {
-					if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-						_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 0, false, false));
+					//if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+						//_entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 0, false, false));
 					if (entity instanceof LivingEntity lv ? CuriosApi.getCuriosHelper().findEquippedCurio(PasterdreamModItems.DEGENERATE_BODYS.get(), lv).isPresent() : false == false) {
 						if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
 							entity.hurt(new DamageSource(world.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.FELL_OUT_OF_WORLD)), 1);

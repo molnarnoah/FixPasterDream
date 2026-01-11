@@ -10,10 +10,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.pasterdream.init.PasterdreamModAttributes;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.configuration.PasterdreamConfigClientConfiguration;
 
-import net.pasterdream.utils.AmarokUtil;
 
 @OnlyIn(Dist.CLIENT)
 public class MeltdreamenergyTank {
@@ -29,6 +28,7 @@ public class MeltdreamenergyTank {
 
     public static void randomBarHandler(ForgeGui gui, int x, int y, GuiGraphics maxStack) {
         var player = MC.player;
+        if (!player.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).isPresent())return;
         if (PasterdreamConfigClientConfiguration.STEALTH_DISPLAY_ATTRIBUTE_HUD.get() && !player.isShiftKeyDown()) return;
         MC.getProfiler().push("meltdreamenergy_bar");
         RenderSystem.enableBlend();
@@ -36,7 +36,7 @@ public class MeltdreamenergyTank {
         RenderSystem.setShaderTexture(0, ICON);
         var xBase = PasterdreamConfigClientConfiguration.MELTDREAMENERGY_TANK_XBASE.get().intValue();
         var yBase = y + PasterdreamConfigClientConfiguration.MELTDREAMENERGY_TANK_YBASE.get().intValue();
-        int amount = (int) Math.round(player.getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue());
+        int amount = (int) Math.round(player.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).map(MeltDreamEnergyCapability::getMeltDreamEnergy).orElse(0.0));
         float smallAmout = (float) 66 / 100;
         maxStack.blit(ICON, xBase, yBase,0,0,80,15);
         maxStack.blit(ICON, xBase, yBase, 0, 16, 11 + Math.round(smallAmout * amount), 31);

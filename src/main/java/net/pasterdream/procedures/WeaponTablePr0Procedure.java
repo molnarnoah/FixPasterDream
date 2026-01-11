@@ -172,19 +172,19 @@ public class WeaponTablePr0Procedure {
         }
 
         public static void execute(Level world, double x, double y, double z, Entity entity) {
-		if (entity == null || world.isClientSide() || !(entity instanceof Player)) return;
-                var player = (Player) entity;
+		if (entity == null || world.isClientSide() || !(entity instanceof Player player)) return;
 
-		if (player.getMainHandItem().getItem() == PasterdreamModItems.BLUEPRINT_1.get()) {
-                        // 检查结构
-                        if (map.isEmpty()) initMultiBlockMaps(); // 因为是静态类所以无需反复导入，检查不空即可
-                        var isBuilding = MultiBlock.INITIALIZE.checkMultiBlock(map, (Player) entity, world, new BlockPos(Mth.floor(x), Mth.floor(y - 1), Mth.floor(z)), 1, 3, entity.getDirection(), Blocks.AIR, 4);
-
-			if (isBuilding) {
-			        WeaponWorkshopPr0Procedure.execute(world, player, x, (y + 1), z);
-                        }
-			else player.displayClientMessage(Component.literal("\u591A\u65B9\u5757\u7ED3\u6784\u4E0D\u5B8C\u6574"), (true));
-		} else player.displayClientMessage(Component.literal("\u7F3A\u5C11\u84DD\u56FE \u8BF7\u624B\u6301\u84DD\u56FE\u70B9\u51FB\u6838\u5FC3"), (true));
+        if (player.getMainHandItem().getItem() == PasterdreamModItems.BLUEPRINT_1.get()) {
+            // 检查结构
+            if (map.isEmpty()) initMultiBlockMaps(); // 因为是静态类所以无需反复导入，检查不空即可
+            var isBuilding = MultiBlock.INITIALIZE.checkMultiBlock(map, (Player) entity, world, new BlockPos(Mth.floor(x), Mth.floor(y - 1), Mth.floor(z)), 1, 3, entity.getDirection(), Blocks.AIR, 4);
+            if (isBuilding) {
+                WeaponWorkshopPr0Procedure.execute(world, player, x, (y + 1), z);
+            }
+            else
+                player.displayClientMessage(Component.literal("\u591A\u65B9\u5757\u7ED3\u6784\u4E0D\u5B8C\u6574"), (true));
+		} else
+            player.displayClientMessage(Component.literal("\u7F3A\u5C11\u84DD\u56FE \u8BF7\u624B\u6301\u84DD\u56FE\u70B9\u51FB\u6838\u5FC3"), (true));
 	}
 }
 

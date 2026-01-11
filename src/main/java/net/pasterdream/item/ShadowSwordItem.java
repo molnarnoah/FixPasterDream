@@ -1,23 +1,28 @@
 
 package net.pasterdream.item;
 
-import net.pasterdream.procedures.ShadowSwordPr2Procedure;
-import net.pasterdream.procedures.ShadowSwordPr1Procedure;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.*;
+import net.pasterdream.capability.SanCapability;
+import net.pasterdream.init.PasterdreamModAttributes;
+import net.pasterdream.init.PasterdreamModGameRules;
 import net.pasterdream.procedures.ShadowSwordPr0Procedure;
 import net.pasterdream.init.PasterdreamModItems;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ShadowSwordItem extends SwordItem {
 	public ShadowSwordItem() {
@@ -47,23 +52,31 @@ public class ShadowSwordItem extends SwordItem {
 			}
 		}, 3, -2.4f, new Item.Properties().fireResistant());
 	}
-
-	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		ShadowSwordPr1Procedure.execute(entity.level(), entity, sourceentity, itemstack);
-		return retval;
-	}
-
+    static UUID uuid = UUID.fromString("54616704-a99f-4956-ae68-03331f65e0d2");
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.putAll(getDefaultAttributeModifiers(slot));
+        if(slot == EquipmentSlot.MAINHAND)
+        {
+            builder.put(PasterdreamModAttributes.SAN_VARIABILITY.get(),new AttributeModifier(uuid,"pasterdream.shadowsword.san_variability",-3.6, AttributeModifier.Operation.ADDITION));
+            double san = stack.getOrCreateTag().getDouble("san");
+            if(san > 0.0)
+            {
+                builder.put(Attributes.ATTACK_SPEED,new AttributeModifier(uuid,"pasterdream.shadowsword.attack_speed",0.5*(1.0 - san/100.0), AttributeModifier.Operation.MULTIPLY_BASE));
+                builder.put(Attributes.ATTACK_DAMAGE,new AttributeModifier(uuid,"pasterdream.shadowsword.attack_damage",0.75*(1.0 - san/100.0), AttributeModifier.Operation.MULTIPLY_BASE));
+            }
+        }
+        return builder.build();
+    }
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(Component.literal("\u88AB\u52A8\uFF1A"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6301\u5251\u8005\u7684\u7CBE\u795E\u503C\u8D8A\u4F4E \u9020\u6210\u7684\u4F24\u5BB3\u8D8A\u9AD8"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6700\u9AD8+\u653B\u51FB\u529B\u500D\u738775% \u653B\u51FB\u901F\u5EA6+50%"));
-		list.add(Component.literal("\u00A77\u25AA \u00A74\u5F53\u6CA1\u6709\u7CBE\u795E\u503C\u53EF\u4F9B\u6D88\u8017\u65F6 \u6325\u780D\u4F1A\u53CD\u566C\u81EA\u8EAB\u751F\u547D"));
-		list.add(Component.literal("\u00A77\u25AA \u00A74\u75AF\u72C2\u5149\u73AF-3.6san/\u5206\u949F"));
-		list.add(Component.literal("\u00A77\u00A7o-- \u68A6\u9B47\u6E10\u6E10\u53D8\u5F97\u5C16\u9510\uFF0C\u94F8\u6210\u4E86\u8FD9\u628A\u5229\u5251"));
+        if(SanCapability.IsSanCheckSystem())
+        {
+            list.add(Component.translatable("item.pasterdream.shadow_sword.hovertext.is_san"));
+        }
+		list.add(Component.translatable("item.pasterdream.shadow_sword.hovertext.describe"));
 	}
 
 	@Override
@@ -73,10 +86,25 @@ public class ShadowSwordItem extends SwordItem {
 		return retval;
 	}
 
-	@Override
-	public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-		super.inventoryTick(itemstack, world, entity, slot, selected);
-		if (selected)
-			ShadowSwordPr2Procedure.execute(entity);
-	}
+    @Override
+    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(itemstack, world, entity, slot, selected);
+        if(!world.isClientSide)
+        {
+            if (selected && SanCapability.IsSanCheckSystem())
+            {
+                double old_san = itemstack.getOrCreateTag().getDouble("san");
+                double new_san = entity.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).map(SanCapability::getSanValue).orElse(100.0);
+                if(Math.abs(new_san - old_san) > 1)
+                {
+                    itemstack.getOrCreateTag().putDouble("san", entity.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).map(SanCapability::getSanValue).orElse(100.0));
+                }
+            }
+            else
+            {
+                itemstack.getOrCreateTag().remove("san");
+            }
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.init.PasterdreamModBlocks;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.PasterdreamMod;
@@ -25,10 +26,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 
 public class ForcedTowerPr1Procedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+	public static void execute(LevelAccessor world, double x, double y, double z, Player entity) {
 		if (entity == null)
 			return;
-		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+		if (entity.getMainHandItem().getItem() == Blocks.AIR.asItem()) {
 			if ((world.getBlockState(BlockPos.containing(new Object() {
 				public double getValue(LevelAccessor world, BlockPos pos, String tag) {
 					BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -93,7 +94,8 @@ public class ForcedTowerPr1Procedure {
 					return -1;
 				}
 			}.getValue(world, BlockPos.containing(x, y, z), "coord_z")))).getBlock() == Blocks.AIR) {
-				if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.5) {
+
+                if (MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(entity,0.5)) {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, (float) 1.5, 1);
@@ -101,7 +103,6 @@ public class ForcedTowerPr1Procedure {
 							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, (float) 1.5, 1, false);
 						}
 					}
-					((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.5));
 					PasterdreamMod.queueServerWork(35, () -> {
 						{
 							Entity _ent = entity;
@@ -234,12 +235,12 @@ public class ForcedTowerPr1Procedure {
 							world.setBlock(_pos, _bs.setValue(_integerProp, _value), 3);
 					}
 				} else {
-					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
+					if (entity.level().isClientSide())
+                        entity.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), true);
 				}
 			} else {
-				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(Component.literal("\u5F3A\u5F81\u4F20\u9001\u5854\u5DF2\u88AB\u9057\u5931\u6216\u963B\u6321"), true);
+				if (entity.level().isClientSide())
+                    entity.displayClientMessage(Component.literal("\u5F3A\u5F81\u4F20\u9001\u5854\u5DF2\u88AB\u9057\u5931\u6216\u963B\u6321"), true);
 			}
 		}
 		ForcedTowerPr2Procedure.execute(world, x, y, z, entity);

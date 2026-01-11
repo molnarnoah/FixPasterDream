@@ -1,6 +1,14 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.pasterdream.init.PasterdreamModAttributes;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.core.animation.RawAnimation;
@@ -10,7 +18,6 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.GeoItem;
 
-import net.pasterdream.procedures.ShadowHandLanternPr1Procedure;
 import net.pasterdream.procedures.ShadowHandLanternPr0Procedure;
 import net.pasterdream.item.renderer.ShadowHandLanternItemRenderer;
 
@@ -29,6 +36,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.List;
 
@@ -105,7 +113,13 @@ public class ShadowHandLanternItem extends Item implements GeoItem {
 		list.add(Component.literal("\u00A77\u25AA \u00A79\u51B7\u5374\u65F6\u95F4\uFF1A8\u79D2"));
 		list.add(Component.literal("\u00A77\u25AA \u00A74\u7CBE\u795E\u503C\u6D88\u8017\uFF1A1"));
 	}
-
+    static UUID uuid = UUID.fromString("332e7034-93a3-4506-afe6-52dc5c511f48");
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(PasterdreamModAttributes.SAN_VARIABILITY.get(),new AttributeModifier(uuid,"pasterdream.shadow_hand_lantern.san_variability",1.2, AttributeModifier.Operation.ADDITION));
+        return builder.build();
+    }
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
@@ -118,10 +132,4 @@ public class ShadowHandLanternItem extends Item implements GeoItem {
 		return ar;
 	}
 
-	@Override
-	public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-		super.inventoryTick(itemstack, world, entity, slot, selected);
-		if (selected)
-			ShadowHandLanternPr1Procedure.execute(world, entity);
-	}
 }

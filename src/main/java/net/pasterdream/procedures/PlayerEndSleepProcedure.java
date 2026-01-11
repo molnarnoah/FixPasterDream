@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.configuration.PasterdreamConfigCommonConfiguration;
 import net.pasterdream.PasterdreamMod;
@@ -32,8 +34,10 @@ public class PlayerEndSleepProcedure {
 			return;
 		PasterdreamMod.queueServerWork(5, () -> {
 			if (world instanceof Level _lvl0 && _lvl0.isDay()) {
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get())
-						.setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() + (double) PasterdreamConfigCommonConfiguration.SLEEP_SAN_RECOVERY_AMOUNT.get()));
+                if(entity instanceof Player pl)
+                {
+                    SanCapability.addPlayerSanWithCheck(pl,PasterdreamConfigCommonConfiguration.SLEEP_SAN_RECOVERY_AMOUNT.get());
+                }
 			}
 		});
 	}

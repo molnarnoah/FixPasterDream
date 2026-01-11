@@ -1,37 +1,20 @@
 
 package net.pasterdream.potion;
 
-import net.pasterdream.procedures.CheerupBuffPr1Procedure;
-import net.pasterdream.procedures.CheerupBuffPr0Procedure;
-
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.pasterdream.init.PasterdreamModAttributes;
+
 
 public class CheerupBuffMobEffect extends MobEffect {
+	private final static String uuid = "b57e603c-ae6f-44f3-b51e-b4e5b89171c9";
 	public CheerupBuffMobEffect() {
 		super(MobEffectCategory.BENEFICIAL, -33158);
-	}
-
-	@Override
-	public String getDescriptionId() {
-		return "effect.pasterdream.cheerup_buff";
-	}
-
-	@Override
-	public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-		CheerupBuffPr0Procedure.execute(entity);
-	}
-
-	@Override
-	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		CheerupBuffPr1Procedure.execute(entity);
-	}
-
-	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier) {
-		return true;
+		this.addAttributeModifier(PasterdreamModAttributes.TELEPORTATIONCD.get(), uuid, -0.1, AttributeModifier.Operation.ADDITION);
+		this.addAttributeModifier(Attributes.MOVEMENT_SPEED, uuid, 0.05, AttributeModifier.Operation.ADDITION);
+		this.addAttributeModifier(Attributes.ATTACK_SPEED, uuid, 0.05, AttributeModifier.Operation.ADDITION);
+		this.addAttributeModifier(PasterdreamModAttributes.SKILLCD.get(), uuid, -0.1, AttributeModifier.Operation.ADDITION);
 	}
 }

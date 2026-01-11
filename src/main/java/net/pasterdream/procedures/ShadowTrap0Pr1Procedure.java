@@ -1,5 +1,7 @@
 package net.pasterdream.procedures;
 
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModEntities;
 import net.pasterdream.init.PasterdreamModAttributes;
 
@@ -20,6 +22,9 @@ public class ShadowTrap0Pr1Procedure {
 				entityToSpawn.setYRot(world.getRandom().nextFloat() * 360F);
 			}
 		}
-		((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 1));
+        if(entity instanceof Player pl)
+        {
+            SanCapability.addPlayerSanWithCheck(pl,-1);
+        }
 	}
 }

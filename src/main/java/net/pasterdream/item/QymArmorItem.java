@@ -1,8 +1,12 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.procedures.QymArmorPr3Procedure;
-import net.pasterdream.procedures.QymArmorPr2Procedure;
 import net.pasterdream.procedures.QymArmorPr1Procedure;
 import net.pasterdream.procedures.QymArmorPr0Procedure;
 import net.pasterdream.init.PasterdreamModItems;
@@ -22,8 +26,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.google.common.collect.Iterables;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class QymArmorItem extends ArmorItem {
 	public QymArmorItem(ArmorItem.Type type, Item.Properties properties) {
@@ -69,7 +75,13 @@ public abstract class QymArmorItem extends ArmorItem {
 			}
 		}, type, properties);
 	}
-
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.putAll(getDefaultAttributeModifiers(slot));
+        if(slot == this.type.getSlot()) builder.put(PasterdreamModAttributes.SAN_VARIABILITY.get(),new AttributeModifier(UUID.nameUUIDFromBytes(("pasterdream.qym_armor."+slot.getName()).getBytes()),"pasterdream.qym_armor.san_variability",-1, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        return builder.build();
+    }
 	public static class Helmet extends QymArmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties().fireResistant());
@@ -146,14 +158,6 @@ public abstract class QymArmorItem extends ArmorItem {
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 			return "pasterdream:textures/models/armor/qym__layer_2.png";
-		}
-
-		@Override
-		public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-			super.inventoryTick(itemstack, world, entity, slot, selected);
-			if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
-				QymArmorPr2Procedure.execute(entity);
-			}
 		}
 	}
 

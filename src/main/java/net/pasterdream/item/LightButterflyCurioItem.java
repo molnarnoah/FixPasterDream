@@ -1,10 +1,14 @@
 
 package net.pasterdream.item;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
-
-import net.pasterdream.procedures.LightButterflyCurioPr0Procedure;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
@@ -30,6 +34,18 @@ public class LightButterflyCurioItem extends Item implements ICurioItem {
 
 	@Override
 	public void curioTick(SlotContext slotContext, ItemStack stack) {
-		LightButterflyCurioPr0Procedure.execute(slotContext.entity().level(), slotContext.entity().getX(), slotContext.entity().getY(), slotContext.entity().getZ(), slotContext.entity());
+        LivingEntity entity = slotContext.entity();
+        if(entity.tickCount % 20 != 0)return;
+        Level world = entity.level();
+        double x = entity.getX();
+        double y = entity.getY();
+        double z = entity.getZ();
+        if(!world.isClientSide)
+        {
+            if(entity instanceof Player pl && world.getMaxLocalRawBrightness(BlockPos.containing(x, y, z)) <= 7 && MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(pl,0.004))
+            {
+                entity.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 240, 0, false, false));
+            }
+        }
 	}
 }

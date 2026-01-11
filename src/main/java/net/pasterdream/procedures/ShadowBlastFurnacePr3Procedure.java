@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@Deprecated
 public class ShadowBlastFurnacePr3Procedure {
 	public static void execute(LevelAccessor world, double x, double y, double z) {
 		if ((new Object() {

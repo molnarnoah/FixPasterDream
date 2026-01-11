@@ -83,7 +83,7 @@ public class MeltdreamChestPr2Procedure {
 					_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 							"data merge block ~ ~ ~ {LootTable:\"pasterdream:loots_meltdream_chest_1\"}");
 			}
-			MeltdreamChestLootsPr0Procedure.execute(world, x, y, z);
+			//MeltdreamChestLootsPr0Procedure.execute(world, x, y, z);
 			MeltdreamChestPr4Procedure.execute(world, x, y, z);
 			PasterdreamMod.queueServerWork(46, () -> {
 				world.destroyBlock(BlockPos.containing(x, y, z), false);

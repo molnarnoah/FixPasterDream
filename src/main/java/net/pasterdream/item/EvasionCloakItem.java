@@ -2,10 +2,8 @@
 package net.pasterdream.item;
 
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
-import top.theillusivec4.curios.api.SlotContext;
 
 import net.pasterdream.procedures.TurnbackCloakPr1Procedure;
-import net.pasterdream.procedures.TurnbackCloakPr0Procedure;
 
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,10 +37,5 @@ public class EvasionCloakItem extends Item implements ICurioItem {
 		list.add(Component.literal("\u00A77\u25AA \u00A79\u6210\u529F\u56DE\u907F\u4F24\u5BB3\u540E\u83B7\u5F97 \u53CD\u51FBI\uFF080:02\uFF09"));
 		list.add(Component.literal("\u00A77\u25AA \u00A79\u51B7\u5374\u65F6\u95F4\uFF1A300\u79D2"));
 		list.add(Component.literal("\u00A77\u25AA \u00A74\u878D\u68A6\u80FD\u91CF\u6D88\u8017\uFF1A10"));
-	}
-
-	@Override
-	public void curioTick(SlotContext slotContext, ItemStack stack) {
-		TurnbackCloakPr0Procedure.execute(stack);
 	}
 }

@@ -1,10 +1,15 @@
 
 package net.pasterdream.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.pasterdream.init.PasterdreamModAttributes;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -32,33 +37,23 @@ public class Health0NecklaceItem extends Item implements ICurioItem {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(Component.literal("\u54C1\u8D28\uFF1A\u00A7a\u4F18\u79C0 \u2605\u2605"));
-		list.add(Component.literal("\u00A77\u25AA \u00A79\u6700\u5927\u751F\u547D\u503C+2"));
-	}
+    }
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        if(slotContext.entity() != null)
+        {
+            return CuriosApi.getCuriosInventory(slotContext.entity()).map(handler ->
+                            handler.findFirstCurio(stack.getItem()).isEmpty())
+                    .orElse(true);
+        }
+        return true;
+    }
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext,
+                                                                        UUID uuid, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+        attributeModifiers.put(Attributes.MAX_HEALTH,modifier);
+        return attributeModifiers;
+    }
 
-	@Override
-	public boolean canEquip(SlotContext context, ItemStack itemStack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			return instance.getModifier(modifier.getId()) == null;
-		}
-		return false;
-	}
-
-	@Override
-	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			if (instance.getModifier(modifier.getId()) == null)
-			instance.addPermanentModifier(modifier);
-		}
-	} 
-
-	@Override
-	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			instance.removeModifier(modifier.getId());
-			player.setHealth(player.getMaxHealth());
-		}
-	}
 }

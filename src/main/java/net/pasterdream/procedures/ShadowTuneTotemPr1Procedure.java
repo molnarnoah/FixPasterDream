@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.pasterdream.init.PasterdreamModMobEffects;
 
 import java.util.List;
 import java.util.Comparator;
@@ -26,10 +27,9 @@ public class ShadowTuneTotemPr1Procedure {
 					if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 						_entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, 0, false, false));
 				}
-				if (entityiterator instanceof Player) {
-					((LivingEntity) entityiterator).getAttribute(PasterdreamModAttributes.SAN.get()).setBaseValue((((LivingEntity) entityiterator).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() - 0.008));
-					if (entityiterator instanceof LivingEntity _entity)
-						_entity.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+				if (entityiterator instanceof Player entity) {
+                    entity.addEffect(new MobEffectInstance(PasterdreamModMobEffects.OPPRESSION_BUFF.get(),20,0));
+                    entity.removeEffect(MobEffects.DAMAGE_RESISTANCE);
 				}
 			}
 		}

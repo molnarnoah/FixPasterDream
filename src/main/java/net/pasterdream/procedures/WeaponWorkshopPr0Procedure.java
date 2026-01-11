@@ -66,8 +66,10 @@ public class WeaponWorkshopPr0Procedure {
 	public static void execute(Level world, Player player, double x, double y, double z) {
 		if (map.isEmpty()) initMaps();
 
-		if (!world.isClientSide()) world.playSound(null, new BlockPos(Mth.floor(x), Mth.floor(y), Mth.floor(z)), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:machine0")), SoundSource.NEUTRAL, 1, 1);
-		else world.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:machine0")), SoundSource.NEUTRAL, 1, 1, false);
+		if (!world.isClientSide())
+            world.playSound(null, new BlockPos(Mth.floor(x), Mth.floor(y), Mth.floor(z)), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:machine0")), SoundSource.NEUTRAL, 1, 1);
+		else
+            world.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:machine0")), SoundSource.NEUTRAL, 1, 1, false);
 
 		MultiBlock.INITIALIZE.setMultiBlock(map, player, world, new BlockPos(Mth.floor(x), Mth.floor(y) - 2, Mth.floor(z)), 1, 3, player.getDirection(), 1);
 	}

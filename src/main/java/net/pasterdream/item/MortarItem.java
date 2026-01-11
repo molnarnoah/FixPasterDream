@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.network.chat.Component;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MortarItem extends Item {
@@ -15,15 +16,14 @@ public class MortarItem extends Item {
 		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
 
-	@Override
-	public boolean hasCraftingRemainingItem() {
-		return true;
-	}
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
+        return true;
+    }
 
-	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack itemstack) {
-		return new ItemStack(this);
-	}
+    @Nonnull
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+        return itemStack.copy();
+    }
 
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {

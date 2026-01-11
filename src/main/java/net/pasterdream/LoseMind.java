@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.pasterdream.capability.SanCapability;
 import net.pasterdream.init.PasterdreamModAttributes;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,8 +28,9 @@ public class LoseMind {
 
     public static void randomBarHandler(ForgeGui gui, int x, int y, GuiGraphics maxStack) {
         var player = MC.player;
+        if(!SanCapability.IsSanCheckSystem())return;
         MC.getProfiler().push("lose_mind_gui");
-        var amount = player.getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue();
+        var amount = player.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).map(SanCapability::getSanValue).orElse(100.0);
 
         var nbt = player.getPersistentData();
         float mind;

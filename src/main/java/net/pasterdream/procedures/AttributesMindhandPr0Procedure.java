@@ -79,14 +79,14 @@ public class AttributesMindhandPr0Procedure {
 				_event.addModifier(ForgeMod.SWIM_SPEED.get(), PasterdreamModVariables.paster_swim_speed);
 			}
 		}
-		if (itemstack.getItem() == PasterdreamModItems.SHADOW_SWORD.get()) {
+		/*if (itemstack.getItem() == PasterdreamModItems.SHADOW_SWORD.get()) {
 			if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.MAINHAND) {
 				PasterdreamModVariables.paster_attack_speed_number = itemstack.getOrCreateTag().getDouble("san");
 				PasterdreamModVariables.paster_attack_speed = new AttributeModifier(UUID.fromString("b903dcc1-d025-407b-b994-6fea809928d4"), "paster_attack_speed", ((100 - PasterdreamModVariables.paster_attack_speed_number) * 0.008),
 						AttributeModifier.Operation.ADDITION);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, PasterdreamModVariables.paster_attack_speed);
 			}
-		}
+		}*/
 		if (EnchantmentHelper.getItemEnchantmentLevel(PasterdreamModEnchantments.ENCHANTMENT_ATKSPD.get(), itemstack) != 0) {
 			if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.MAINHAND) {
 				PasterdreamModVariables.paster_enchantment_atkspd_number = itemstack.getEnchantmentLevel(PasterdreamModEnchantments.ENCHANTMENT_ATKSPD.get());

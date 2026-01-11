@@ -16,25 +16,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
 
 public class BlueprintPr0Procedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+	public static void execute(Level world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == Blocks.AIR) {
-			{
-				Entity _ent = entity;
-				Scoreboard _sc = _ent.level().getScoreboard();
-				Objective _so = _sc.getObjective("blueprint_page");
-				if (_so == null)
-					_so = _sc.addObjective("blueprint_page", ObjectiveCriteria.DUMMY, Component.literal("blueprint_page"), ObjectiveCriteria.RenderType.INTEGER);
-				_sc.getOrCreatePlayerScore(_ent.getScoreboardName(), _so).setScore(1);
-			}
-			if (world instanceof Level _level) {
-				if (!_level.isClientSide()) {
-					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:notes")), SoundSource.NEUTRAL, 1, 1);
-				} else {
-					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:notes")), SoundSource.NEUTRAL, 1, 1, false);
-				}
-			}
+		if (world.getBlockState(BlockPos.containing(x, y, z)).getBlock() == Blocks.AIR) {
+            if (!world.isClientSide()) {
+                world.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:notes")), SoundSource.NEUTRAL, 1, 1);
+            } else {
+                world.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:notes")), SoundSource.NEUTRAL, 1, 1, false);
+            }
 		} else {
 			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(Component.literal("\u8BF7\u5BF9\u51C6\u7A7A\u6C14\u4F7F\u7528"), true);

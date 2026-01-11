@@ -1,16 +1,15 @@
 package net.pasterdream.procedures;
 
-import net.pasterdream.init.PasterdreamModAttributes;
-
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
+import net.pasterdream.capability.SanCapability;
 
 public class ShadowVortexBookPr1Procedure {
-	public static boolean execute(Entity entity) {
-		if (entity == null)
-			return false;
-		return ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.01 && ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SAN.get()).getBaseValue() >= 0.05
-				|| (entity instanceof Player _plr ? _plr.getAbilities().instabuild : false);
+	public static boolean execute(ServerPlayer sp) {
+        boolean flag_1 = sp.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).map(cap -> cap.getMeltDreamEnergy() >=0.01 || cap.getNoNeedConsume()).orElse(false);
+        boolean flag_2_1 = sp.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).map(cap -> cap.getSanValue() >= 0.05).orElse(false);
+        boolean flag_2_2 = !SanCapability.IsSanCheckSystem();
+        boolean flag = sp.getAbilities().instabuild;
+		return flag || (flag_1 && (flag_2_1 || flag_2_2));
 	}
 }

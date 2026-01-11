@@ -1,10 +1,14 @@
 
 package net.pasterdream.item;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.SlotContext;
-
-import net.pasterdream.procedures.MeltdreamEnergy0RingPr0Procedure;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
@@ -29,6 +33,14 @@ public class MeltdreamEnergy0RingItem extends Item implements ICurioItem {
 
 	@Override
 	public void curioTick(SlotContext slotContext, ItemStack stack) {
-		MeltdreamEnergy0RingPr0Procedure.execute(slotContext.entity());
+        LivingEntity entity = slotContext.entity();
+        if(entity instanceof Player pl && pl.tickCount % 20 == 0)
+        {
+            if ((pl.level().dimension()) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:dyedream_world")))
+                    || (pl.level().dimension()) == (ResourceKey.create(Registries.DIMENSION, new ResourceLocation("pasterdream:lamp_shadow_world")))) {
+                MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(pl,0.0025);
+            }
+        }
+
 	}
 }

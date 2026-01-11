@@ -147,6 +147,7 @@ public class DyedreamDeskBlock extends Block implements SimpleWaterloggedBlock, 
 					return new DyedreamDeskGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
 				}
 			}, pos);
+            return InteractionResult.CONSUME;
 		}
 		return InteractionResult.SUCCESS;
 	}

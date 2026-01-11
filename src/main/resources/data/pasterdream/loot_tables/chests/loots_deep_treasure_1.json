@@ -76,7 +76,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pasterdream:buncake_6",
+          "name": "pasterdream:dyedream_fruit_buncake",
           "weight": 1,
           "functions": [
             {

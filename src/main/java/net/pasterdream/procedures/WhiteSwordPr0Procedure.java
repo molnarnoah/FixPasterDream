@@ -1,5 +1,6 @@
 package net.pasterdream.procedures;
 
+import net.pasterdream.capability.MeltDreamEnergyCapability;
 import net.pasterdream.init.PasterdreamModEntities;
 import net.pasterdream.init.PasterdreamModAttributes;
 import net.pasterdream.entity.WhiteSwordRainProjectileEntity;
@@ -32,13 +33,12 @@ import net.minecraft.core.BlockPos;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class WhiteSwordPr0Procedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+	public static void execute(LevelAccessor world, double x, double y, double z, Player entity) {
 		if (entity == null)
 			return;
-		if ((entity instanceof Player _plr ? _plr.getAbilities().instabuild : false) || entity instanceof ServerPlayer _plr1 && _plr1.level() instanceof ServerLevel
+		if (entity.getAbilities().instabuild || entity instanceof ServerPlayer _plr1 && _plr1.level() instanceof ServerLevel
 				&& _plr1.getAdvancements().getOrStartProgress(_plr1.server.getAdvancements().getAdvancement(new ResourceLocation("pasterdream:achievement_talent_light"))).isDone()) {
-			if (((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() >= 0.4 || (entity instanceof Player _plr ? _plr.getAbilities().instabuild : false)) {
-				((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).setBaseValue((((LivingEntity) entity).getAttribute(PasterdreamModAttributes.MELTDREAMENERGY.get()).getBaseValue() - 0.1));
+			if (MeltDreamEnergyCapability.consumePlayerMeltDreamEnergy(entity,0.1)) {
 				if (world instanceof Level _level) {
 					if (!_level.isClientSide()) {
 						_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:white_sword_rain")), SoundSource.PLAYERS, (float) 0.7, 1);
@@ -46,8 +46,8 @@ public class WhiteSwordPr0Procedure {
 						_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pasterdream:white_sword_rain")), SoundSource.PLAYERS, (float) 0.7, 1, false);
 					}
 				}
-				if (entity instanceof LivingEntity _entity)
-					_entity.swing(InteractionHand.MAIN_HAND, true);
+                entity.swing(InteractionHand.MAIN_HAND, true);
+
 				{
 					AtomicReference<IItemHandler> _iitemhandlerref = new AtomicReference<>();
 					entity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(_iitemhandlerref::set);
@@ -55,8 +55,7 @@ public class WhiteSwordPr0Procedure {
 						for (int _idx = 0; _idx < _iitemhandlerref.get().getSlots(); _idx++) {
 							ItemStack itemstackiterator = _iitemhandlerref.get().getStackInSlot(_idx).copy();
 							if (itemstackiterator.is(ItemTags.create(new ResourceLocation("pasterdream:skill")))) {
-								if (entity instanceof Player _player)
-									_player.getCooldowns().addCooldown(itemstackiterator.getItem(), (int) (84 * ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SKILLCD.get()).getValue()));
+                                entity.getCooldowns().addCooldown(itemstackiterator.getItem(), (int) (84 * ((LivingEntity) entity).getAttribute(PasterdreamModAttributes.SKILLCD.get()).getValue()));
 							}
 						}
 					}
@@ -398,12 +397,12 @@ public class WhiteSwordPr0Procedure {
 					});
 				});
 			} else {
-				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), false);
+				if (!entity.level().isClientSide())
+                    entity.displayClientMessage(Component.literal("\u878D\u68A6\u80FD\u91CF\u4E0D\u8DB3"), false);
 			}
 		} else {
-			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal("\u672A\u9009\u5219<\u660E\u706F> \u65E0\u6CD5\u4F7F\u7528\u6B64\u5251"), false);
+			if (!entity.level().isClientSide())
+                entity.displayClientMessage(Component.literal("\u672A\u9009\u5219<\u660E\u706F> \u65E0\u6CD5\u4F7F\u7528\u6B64\u5251"), false);
 		}
 	}
 }
