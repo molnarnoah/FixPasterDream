@@ -14,8 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.pasterdream.PasterdreamMod;
@@ -70,9 +72,16 @@ import io.netty.buffer.Unpooled;
 public class ShadowBlastFurnaceTileEntity extends BaseContainerBlockEntity implements GeoBlockEntity, WorldlyContainer {
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(6, ItemStack.EMPTY);
+    private final FluidTank fluidTank = new FluidTank(9000, fs -> fs.getFluid().isSame(PasterdreamModFluids.SHADOW_LIQUID.get())) {
+        @Override
+        protected void onContentsChanged() {
+            super.onContentsChanged();
+            inventoryChanged();
+        }
+    };
     /*
     i = 0 输入
-    i = 1 噩梦燃料位 --todo 用tag判断
+    i = 1 噩梦燃料位
     i = 2 产物
     i = 3 副产物
     i = 4 放阴影燃料桶 --todo 用tag判断
@@ -187,23 +196,30 @@ public class ShadowBlastFurnaceTileEntity extends BaseContainerBlockEntity imple
     public static void blastingTick(Level level, BlockPos pos, BlockState state, ShadowBlastFurnaceTileEntity shadowblastfurnace) {
         boolean updateInventory = false;
         //输入液体燃料
-        if(shadowblastfurnace.getItem(4).is(PasterdreamModItems.SHADOW_LIQUID_BUCKET.get())) {
-            ItemStack input = shadowblastfurnace.getItem(4);
+        if(shadowblastfurnace.fluidTank.getSpace() > 0) {
+            ItemStack input = shadowblastfurnace.getItem(4).copy().split(1);
             ItemStack output = shadowblastfurnace.getItem(5);
-            ItemStack result = input.getCraftingRemainingItem();
-            FluidStack fluidStack = new FluidStack(PasterdreamModFluids.SHADOW_LIQUID.get(),1000);
-            //检查有无空余空间
+            FluidStack fluidStack = input
+                    .getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+                    .map(cap->
+                            cap.drain(new FluidStack(PasterdreamModFluids.SHADOW_LIQUID.get(),shadowblastfurnace.fluidTank.getSpace()),IFluidHandler.FluidAction.SIMULATE)).orElse(FluidStack.EMPTY);
+            ItemStack result = input.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+                    .map(cap->{
+                        cap.drain(fluidStack,IFluidHandler.FluidAction.EXECUTE);
+                        return cap.getContainer();
+                    }).orElse(input);
+            //检查能否成功装入
             boolean flag1 = shadowblastfurnace.fluidTank.fill(fluidStack, IFluidHandler.FluidAction.SIMULATE) > 0;
             //输出是不是empty
             boolean flag2 = result.isEmpty();
             //输出槽是不是没满且与当前输出一致
-            boolean flag3 = result.is(output.getItem()) && output.getCount() + result.getCount() <= output.getMaxStackSize();
+            boolean flag3 = ItemStack.isSameItemSameTags(result,output) && output.getCount() + result.getCount() <= output.getMaxStackSize();
             //输出槽是不是空的
             boolean flag4 = output.isEmpty();
             if(flag1 && (flag2 || flag3 || flag4)) {
                 updateInventory = true;
                 shadowblastfurnace.fluidTank.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
-                input.shrink(1);
+                shadowblastfurnace.getItem(4).shrink(1);
                 if(!flag2) {
                     if(flag3) {
                         output.grow(result.getCount());
@@ -397,17 +413,6 @@ public class ShadowBlastFurnaceTileEntity extends BaseContainerBlockEntity imple
 		return true;
 	}
 
-	private final FluidTank fluidTank = new FluidTank(9000, fs -> {
-		if (fs.getFluid() == PasterdreamModFluids.SHADOW_LIQUID.get())
-			return true;
-		return false;
-	}) {
-		@Override
-		protected void onContentsChanged() {
-			super.onContentsChanged();
-            inventoryChanged();
-		}
-	};
     private void inventoryChanged()
     {
         super.setChanged();
