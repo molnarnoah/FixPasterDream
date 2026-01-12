@@ -39,7 +39,7 @@ public class MeltdreamenergyTank {
         int amount = (int) Math.round(player.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).map(MeltDreamEnergyCapability::getMeltDreamEnergy).orElse(0.0));
         float smallAmout = (float) 66 / 100;
         maxStack.blit(ICON, xBase, yBase,0,0,80,15);
-        maxStack.blit(ICON, xBase, yBase, 0, 16, 11 + Math.round(smallAmout * amount), 31);
+        maxStack.blit(ICON, xBase, yBase, 0, 16, 11 + Math.round(smallAmout * amount), 15);
         if (player.isShiftKeyDown()) maxStack.drawString(MC.font, amount + "/100", xBase + 33, yBase - 5, -1);
         RenderSystem.disableBlend();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
