@@ -47,7 +47,7 @@ public class AttributesCommandCommand {
                                                     if(SanCapability.IsSanCheckSystem())
                                                     {
                                                         ServerPlayer sp = EntityArgument.getPlayer(arguments, "player");
-                                                        SanCapability.setPlayerSanWithCheck(sp,DoubleArgumentType.getDouble(arguments, "san_value"));
+                                                        SanCapability.addPlayerSanWithCheck(sp,DoubleArgumentType.getDouble(arguments, "san_value"));
                                                         sp.getCapability(SanCapability.Provider.PLAYER_SAN_CAPABILITY).ifPresent(cap -> {
                                                             arguments.getSource().sendSuccess(() -> Component.literal(String.format(Component.translatable("command.pasterdream.san.get").getString(),sp.getName().getString(), cap.getSanValue()))
                                                                     ,false);
@@ -137,6 +137,18 @@ public class AttributesCommandCommand {
                                                                     ServerPlayer sp = EntityArgument.getPlayer(arguments, "player");
                                                                     double value = DoubleArgumentType.getDouble(arguments,"value");
                                                                     MeltDreamEnergyCapability.setPlayerMeltDreamEnergy(sp,value);
+                                                                    sp.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).ifPresent(cap -> {
+                                                                        arguments.getSource().sendSuccess(() -> Component.literal(String.format(Component.translatable("command.pasterdream.meltdreamenergy.meltdreamenergy.get").getString(),sp.getName().getString(), cap.getMeltDreamEnergy()))
+                                                                                ,false);
+                                                                    });
+                                                                    return 0;
+                                                                })))
+                                                .then(Commands.literal("add")
+                                                        .then(Commands.argument("value", DoubleArgumentType.doubleArg())
+                                                                .executes( arguments ->{
+                                                                    ServerPlayer sp = EntityArgument.getPlayer(arguments, "player");
+                                                                    double value = DoubleArgumentType.getDouble(arguments,"value");
+                                                                    MeltDreamEnergyCapability.addPlayerMeltDreamEnergy(sp,value);
                                                                     sp.getCapability(MeltDreamEnergyCapability.Provider.PLAYER_MELTDREAMENERGY_CAPABILITY).ifPresent(cap -> {
                                                                         arguments.getSource().sendSuccess(() -> Component.literal(String.format(Component.translatable("command.pasterdream.meltdreamenergy.meltdreamenergy.get").getString(),sp.getName().getString(), cap.getMeltDreamEnergy()))
                                                                                 ,false);
