@@ -63,7 +63,7 @@ public class Dreamnotes8Item extends Item {
 			NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
 				@Override
 				public Component getDisplayName() {
-					return Component.literal("Dreamnotes 7");
+					return Component.literal("Dreamnotes 8");
 				}
 
 				@Override
