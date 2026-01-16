@@ -72,6 +72,18 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev/"
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
@@ -82,6 +94,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:15.2.0.27")
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.2.0.27")
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.2.0.27")
+    //runtimeOnly fg.deobf("maven.modrinth:patchouli:1.20.1-84.1-forge")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

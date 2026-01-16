@@ -1153,6 +1153,8 @@
   "blueprint.pasterdream.pasterdream.weapon_workshop": "精铸工坊",
   "jei.pasterdream.shadow_blast_furnace.probability": "%1$s%%概率产出",
   "jei.pasterdream.shadow_blast_furnace.consumefluid": "消耗%1$smb燃料",
+
+  "pasterdream.patchouli_books.bookname": "帕斯特指南",
   "pasterdream.landing_text":"欢迎来到帕斯特之梦",
   "pasterdream.category.overview":"总览",
   "pasterdream.category.overview.description":"关于帕斯特之梦的各个维度",
